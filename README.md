@@ -1,9 +1,9 @@
-# Node REST api to control an IKEA Trådfri setup
+# Node REST API backend to control a IKEA Trådfri setup
 
 ![Control all the things!!](https://i.chzbgr.com/full/7809187328/hBFD4FC46/)
 
 Add your own functionality if IKEA haven't made the feature you need.  
-It is able to control all lights and plugs no matter which room or scene.
+It is able to control all lights and plugs acroess all rooms or scenes.
 
 
 Heavily inspiret by: https://github.com/wschenk/tradfri-cli  
@@ -64,7 +64,7 @@ Used to get information of a device and control the device
 `"value"` - The value of the action. e.g. for brightness pass a value betweeen `0-100` and for colors it could be `"f1e0b5"`
 
 ### confirmation-request 
-Used to confirm the masterswitch. It is there to prevent someone to just accessing the URL
+Used to confirm the masterswitch. It is there to prevent someone from just accessing the URL
 
 #### Example
 ```json

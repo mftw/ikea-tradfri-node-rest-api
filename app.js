@@ -12,18 +12,6 @@ const roomRoute = require("./api/routes/rooms");
 // Development logger. To be disabled in production
 app.use(morgan("dev"));
 
-// Setup static route for image resources
-app.use(
-  "/uploads",
-  express.static(
-    "uploads",
-    // Pass config object to set cache control header
-    {
-      maxAge: "7d"
-    }
-  )
-);
-
 // Make express parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
