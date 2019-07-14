@@ -26,6 +26,9 @@ exports.all_off = async (req, res, next) => {
     // Continue if we are unable to control the device (e.g remote)
     if (!controllableDevice) continue;
 
+    // Continue if the device is dead e.g power outage
+    if(!currentDevice.alive) continue
+
     const onOff =
       currentDevice.type === 2
         ? currentDevice.lightList[0].onOff
@@ -70,6 +73,9 @@ exports.all_on = async (req, res, next) => {
       
     // Continue if we are unable to control the device (e.g remote)
     if (!controllableDevice) continue;
+
+    // Continue if the device is dead e.g power outage
+    if(!currentDevice.alive) continue;
 
     const onOff =
       currentDevice.type === 2

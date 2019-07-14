@@ -7,4 +7,7 @@ const server = http.createServer(app);
 
 server.listen(port);
 
-console.log(`API running @ http://localhost:${port}`);
+// Wait a little bit for the TradfriClient to connect
+setTimeout(() => {
+  console.log(`API running @ http://localhost:${port}`);
+}, 500)

@@ -32,6 +32,21 @@ exports.set_device = async (req, res, next) => {
   }
   const tradfri = await Tradfri;
   const device = findDevice(tradfri, deviceNameOrId);
+
+  if (!device) {
+    return res
+      .status(404)
+      .json({ message: `No device with name or Id ${deviceNameOrId}` });
+  }
+
+  if (!device.alive) {
+    console.log("device dead");
+    return res
+      .status(200)
+      .json({ message: `Device ${deviceNameOrId} is currently unreachable e.g power outage` });
+  }
+  // const result = changeDevice(tradfri, deviceNameOrId, action);
   const result = changeDevice(tradfri, device, action);
   return res.status(200).json(result);
+  // return res.status(200).json(device);
 };

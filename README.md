@@ -6,10 +6,6 @@ Add your own functionality if IKEA haven't made the feature you need.
 It is able to control all lights and plugs acroess all rooms or scenes.
 
 
-Heavily inspiret by: https://github.com/wschenk/tradfri-cli  
-and the article from the same author: https://willschenk.com/articles/2019/controlling_ikea_tradfri_with_node/  
-Thanks alot, couldn't have done it without that!
-
 ## Api endpoints (default port is 3500):
 <!-- 1.  `THE_IP:3500/rooms` - Get all rooms.
 2.  `THE_IP:3500/rooms/get-single-room` - Get a single room. Takes a JSON object as request body.
@@ -29,7 +25,7 @@ Endpoint                    | Request object              | Description
 ----------------------------
 
 ## Request types:
-Depending on the operation, the api takes different JSON request objects
+The api takes different JSON request objects, Depending on the operation.
 
 ### room-request
 Used to get information of the room and control the scenes in the room
@@ -59,7 +55,7 @@ Used to get information of a device and control the device
   }
 }
 ```  
-`"deviceNameOrId"` - Pass either the name or the id of the device  
+`"deviceNameOrId"` - Pass either the name or id of the device  
 `"name"` - Name of the commmand you want, can be one of: `"on" | "off" | "toggle" | "brightness" | "color"`  
 `"value"` - The value of the action. e.g. for brightness pass a value betweeen `0-100` and for colors it could be `"f1e0b5"`
 
@@ -69,7 +65,7 @@ Used to confirm the masterswitch. It is there to prevent someone from just acces
 #### Example
 ```json
 {
-	"confirmation": true
+  "confirmation": true
 }
 ```
 `"confirmation"` - Should always be true
@@ -77,3 +73,12 @@ Used to confirm the masterswitch. It is there to prevent someone from just acces
 ## .env variables needed:
 1.  `BRIDGE_KEY` - The security key on the back of the bridge.
 2.  `SERVER_PORT` - The port the server should run on.
+
+
+To comply with IKEA's requests, the security code is not stored permanently in the application. Instead, the `conf` package is used to store it locally in a different folder.
+
+
+## Acknowlegements
+Heavily inspiret by: https://github.com/wschenk/tradfri-cli  
+and the article from the same author: https://willschenk.com/articles/2019/controlling_ikea_tradfri_with_node/  
+Thanks alot, couldn't have done it without that!
