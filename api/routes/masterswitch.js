@@ -5,6 +5,6 @@ const Masterswitch = require("../controllers/masterswitch");
 
 router.get("/", Masterswitch.all_off);
 
-router.get("/all-on", Masterswitch.all_on)
+router.get("/all-on", Masterswitch.all_on);
 
 module.exports = router;

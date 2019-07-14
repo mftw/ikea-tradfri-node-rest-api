@@ -3,6 +3,8 @@ const Tradfri = require("../../lib/tradfri/instance");
 
 exports.show_all_devices = async (req, res, next) => {
   const tradfri = await Tradfri;
+
+  // be nice and return an iterable array. Everyone loves that.
   return res.status(200).json(Object.entries(tradfri.devices));
 };
 
@@ -27,9 +29,11 @@ exports.show_single_device = async (req, res, next) => {
 
 exports.set_device = async (req, res, next) => {
   const { deviceNameOrId, action } = req.body;
-  if(!deviceNameOrId || !action) {
-    return res.status(400).json({})
+
+  if (!deviceNameOrId || !action) {
+    return res.status(400).json({});
   }
+
   const tradfri = await Tradfri;
   const device = findDevice(tradfri, deviceNameOrId);
 
@@ -41,9 +45,9 @@ exports.set_device = async (req, res, next) => {
 
   if (!device.alive) {
     console.log("device dead");
-    return res
-      .status(200)
-      .json({ message: `Device ${deviceNameOrId} is currently unreachable e.g power outage` });
+    return res.status(200).json({
+      message: `Device ${deviceNameOrId} is currently unreachable e.g power outage`
+    });
   }
   // const result = changeDevice(tradfri, deviceNameOrId, action);
   const result = changeDevice(tradfri, device, action);
