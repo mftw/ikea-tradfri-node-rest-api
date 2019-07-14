@@ -1,6 +1,8 @@
 # Node REST api to control an IKEA Trådfri setup
 
-Control all the things! Add your own functionality if IKEA haven't made the feature you need.  
+![Control all the things!!](https://i.chzbgr.com/full/7809187328/hBFD4FC46/)
+
+Add your own functionality if IKEA haven't made the feature you need.  
 It is able to control all lights and plugs no matter which room or scene.
 
 
