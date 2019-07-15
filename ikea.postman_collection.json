@@ -8,7 +8,7 @@
 		{
 			"name": "http://localhost:3500/devices",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -37,11 +37,8 @@
 		},
 		{
 			"name": "http://localhost:3500/devices/get-single-device",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -78,11 +75,8 @@
 		},
 		{
 			"name": "http://localhost:3500/devices/set-device",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -112,11 +106,8 @@
 		},
 		{
 			"name": "http://localhost:3500/rooms",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -145,11 +136,8 @@
 		},
 		{
 			"name": "http://localhost:3500/rooms/set-room",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -179,11 +167,8 @@
 		},
 		{
 			"name": "http://localhost:3500/rooms/get-single-room",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -213,11 +198,8 @@
 		},
 		{
 			"name": "http://localhost:3500/masterswitch",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -246,11 +228,8 @@
 		},
 		{
 			"name": "http://localhost:3500/masterswitch/all-on",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
