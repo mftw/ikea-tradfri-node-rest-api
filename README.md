@@ -3,7 +3,7 @@
 ![Control all the things!!](https://i.chzbgr.com/full/7809187328/hBFD4FC46/)
 
 Add your own functionality if IKEA haven't made the feature you need.  
-It is able to control all lights and plugs acroess all rooms or scenes.
+It is able to control all lights and plugs across all rooms or scenes.
 
 
 ## Api endpoints (default port is 3500):
@@ -56,8 +56,9 @@ Used to get information of a device and control the device
 }
 ```  
 `"deviceNameOrId"` - Pass either the name or id of the device  
-`"name"` - Name of the commmand you want, can be one of: `"on" | "off" | "toggle" | "brightness" | "color"`  
-`"value"` - The value of the action. e.g. for brightness pass a value betweeen `0-100` and for colors it could be `"f1e0b5"`
+`"name"` - Name of the commmand you want, can be one of: `"on" | "off" | "toggle" | "brightness" | "color" | "hue" | "saturation" | "colorTemp"`.  
+`"value"` - The value of the action. e.g. for brightness pass a value betweeen `0-100` and for colors it could be `"f1e0b5"`.  
+`transitionTime` - Applies to action names: `"brightness" | "color" | "hue" | "saturation" | "colorTemp"` default is 0.5 seconds.
 
 ### confirmation-request 
 Used to confirm the masterswitch. It is there to prevent someone from just accessing the URL
@@ -73,6 +74,7 @@ Used to confirm the masterswitch. It is there to prevent someone from just acces
 ## .env variables needed:
 1.  `BRIDGE_KEY` - The security key on the back of the bridge.
 2.  `SERVER_PORT` - The port the server should run on.
+3.  `NODE_ENV` - Either production or development.
 
 
 To comply with IKEA's requests, the security code is not stored permanently in the application. Instead, the `conf` package is used to store it locally in a different folder.

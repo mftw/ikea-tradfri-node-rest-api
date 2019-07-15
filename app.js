@@ -5,12 +5,14 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
 // other imports
-const masterswitchRoute = require('./api/routes/masterswitch');
+const masterswitchRoute = require("./api/routes/masterswitch");
 const deviceRoute = require("./api/routes/devices");
 const roomRoute = require("./api/routes/rooms");
 
-// Development logger. To be disabled in production
-app.use(morgan("dev"));
+// Development logger. Disable in production
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // Make express parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Routes which should handle requests
-app.use("/masterswitch", masterswitchRoute)
+app.use("/masterswitch", masterswitchRoute);
 app.use("/devices", deviceRoute);
 app.use("/rooms", roomRoute);
 
