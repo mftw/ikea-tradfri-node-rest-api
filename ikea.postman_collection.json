@@ -6,6 +6,39 @@
 	},
 	"item": [
 		{
+			"name": "http://localhost:3500/test",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"groupOperation\":{\n\t\t\"group\": \"stue loft\",\n\t\t\"operation\": {\n\t\t\t\"onOff\": true\n\t\t}\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:3500/devices",
 			"request": {
 				"method": "POST",
@@ -252,6 +285,30 @@
 					"path": [
 						"masterswitch",
 						"all-on"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3500/devices/get-battery-life",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3500/devices/get-battery-life",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"devices",
+						"get-battery-life"
 					]
 				}
 			},

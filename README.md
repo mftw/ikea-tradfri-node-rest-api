@@ -70,6 +70,7 @@ Used to confirm the masterswitch.
 }
 ```
 `"confirmation"` - Should always be true
+`"force"` - Optional: Control individual devices as opposed to individual groups
 
 ## .env variables needed:
 1.  `BRIDGE_KEY` - The security key on the back of the bridge.

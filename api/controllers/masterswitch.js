@@ -37,7 +37,7 @@ const masterswitch = async on => {
 /**
  * Finds all individual devices and turns them on or off
  * @param {Bool} on on/off switch
- * @returns {Array} Key value pair with each group and the result
+ * @returns {Array} Key value pair with each device and the result
  */
 const masterswitchForce = async on => {
   const tradfri = await Tradfri;
