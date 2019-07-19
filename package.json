@@ -5,9 +5,9 @@
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
-    "startdev": "nodemon index.js",
-    "debug": "nodemon --inspect index.js"
+    "start": "nodemon --ignore frontend/ index.js",
+    "startdev": "nodemon --ignore frontend/ index.js",
+    "debug": "nodemon --inspect --ignore frontend/ index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +20,9 @@
     "morgan": "^1.9.1",
     "node-tradfri-client": "^1.5.0",
     "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.0.1"
   }
 }

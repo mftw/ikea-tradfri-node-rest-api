@@ -10,26 +10,29 @@ const masterswitch = async on => {
   const tradfri = await Tradfri;
 
   const operation = {
-    onOff: on ? true : false
+    onOff: on ? true : false,
   };
 
-  const report = [];
+  const requestResults = [];
+  const requestGroups = [];
 
   for (const group in tradfri.groups) {
     if (tradfri.groups.hasOwnProperty(group)) {
       const currentGroup = tradfri.groups[group];
-      const requestSent = await tradfri.operateGroup(
-        currentGroup.group,
-        operation,
-        true
+      // Do not await in loops, push to array to await later
+      requestResults.push(
+        tradfri.operateGroup(currentGroup.group, operation, true)
       );
-
-      report.push([
-        currentGroup.group.name,
-        requestSent ? "on" : "off"
-      ]);
+      requestGroups.push(currentGroup.group.name);
     }
   }
+
+  // Wait for all the requests to complete
+  await Promise.all(requestResults);
+
+  const report = requestGroups.map((request, index) => {
+    return [request, requestResults[index] === true ? "on" : "off"];
+  });
 
   return report;
 };
@@ -44,7 +47,7 @@ const masterswitchForce = async on => {
   const devices = tradfri.devices;
 
   const action = {
-    name: on ? "on" : "off"
+    name: on ? "on" : "off",
   };
 
   const report = [];
@@ -54,8 +57,8 @@ const masterswitchForce = async on => {
     if (devices.hasOwnProperty(device)) {
       const currentDevice = devices[device];
       const controllableDevice =
-      // Only attempt to control lights (2) and plugs (3)
-      currentDevice.type === 2 || currentDevice.type === 3 || false;
+        // Only attempt to control lights (2) and plugs (3)
+        currentDevice.type === 2 || currentDevice.type === 3 || false;
 
       // Continue if we are unable to control the device (e.g remote)
       if (!controllableDevice) continue;
@@ -91,7 +94,9 @@ exports.all_off = async (req, res, next) => {
     return res.status(400).json({ message: "Need confirmation in request" });
   }
 
-  const report = force ? await masterswitchForce(false) : await masterswitch(false);
+  const report = force
+    ? await masterswitchForce(false)
+    : await masterswitch(false);
 
   return res.status(200).json({ report });
 };
@@ -103,7 +108,9 @@ exports.all_on = async (req, res, next) => {
     return res.status(400).json({ message: "Need confirmation in request" });
   }
 
-  const report = force ? await masterswitchForce(true) : await masterswitch(true);
+  const report = force
+    ? await masterswitchForce(true)
+    : await masterswitch(true);
 
   return res.status(200).json({ report });
 };

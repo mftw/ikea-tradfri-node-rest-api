@@ -1,0 +1,21 @@
+{
+  "env": {
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": 1,
+    "eqeqeq": ["warn", "smart"],
+    "arrow-spacing": 1,
+    "arrow-parens": ["warn", "as-needed"],
+    "object-curly-spacing": ["error", "always"],
+    "no-await-in-loop": 1,
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+      }
+    ]
+  }
+}
