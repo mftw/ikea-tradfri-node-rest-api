@@ -58,10 +58,10 @@ Used to get information of a device and control the device
 `"deviceNameOrId"` - Pass either the name or id of the device  
 `"name"` - Name of the commmand you want, can be one of: `"on" | "off" | "toggle" | "brightness" | "color" | "hue" | "saturation" | "colorTemp"`.  
 `"value"` - The value of the action. e.g. for brightness pass a value betweeen `0-100` and for colors it could be `"f1e0b5"`.  
-`transitionTime` - Applies to action names: `"brightness" | "color" | "hue" | "saturation" | "colorTemp"` default is 0.5 seconds.
+`"transitionTime"` - Applies to action names: `"brightness" | "color" | "hue" | "saturation" | "colorTemp"` default is 0.5 seconds.
 
 ### confirmation-request 
-Used to confirm the masterswitch. It is there to prevent someone from just accessing the URL
+Used to confirm the masterswitch.
 
 #### Example
 ```json
@@ -83,4 +83,5 @@ To comply with IKEA's requests, the security code is not stored permanently in t
 ## Acknowlegements
 Heavily inspiret by: https://github.com/wschenk/tradfri-cli  
 and the article from the same author: https://willschenk.com/articles/2019/controlling_ikea_tradfri_with_node/  
+And a big thanks to this lib: https://github.com/AlCalzone/node-tradfri-client  
 Thanks alot, couldn't have done it without that!

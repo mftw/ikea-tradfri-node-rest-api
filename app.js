@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const masterswitchRoute = require("./api/routes/masterswitch");
 const deviceRoute = require("./api/routes/devices");
 const roomRoute = require("./api/routes/rooms");
+const Testing = require("./api/routes/testing");
 
 // Development logger. Disable in production
 if (process.env.NODE_ENV === "development") {
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use("/masterswitch", masterswitchRoute);
 app.use("/devices", deviceRoute);
 app.use("/rooms", roomRoute);
+app.use("/test", Testing)
 
 // Make 404 response when dead endpoint
 app.use((req, res, next) => {
@@ -51,10 +53,5 @@ app.use((error, req, res, next) => {
     }
   });
 });
-
-// const serializedb = require('./serializedb');
-// serializedb();
-// serializedb.includeProductGroupRel();
-// console.log(process)
 
 module.exports = app;
