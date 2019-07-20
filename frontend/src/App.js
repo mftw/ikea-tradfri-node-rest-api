@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./App.scss";
+import styles from "./App.module.scss";
+// import "./App.scss";
+// import cog from "./assets/icons/cog.svg";
+import Icon from "./components/Icon/Icon"
 
 function App() {
   const [data, setData] = useState(null);
@@ -28,8 +31,37 @@ function App() {
   }, [setData])
 
   return (
-    <div className="main-container">
-      {JSON.stringify(data)}
+    <div className={styles.mainContainer}>
+      <div className={styles.contentArea}>
+        <pre>
+          {JSON.stringify(data, null, 2)}
+          hej med dig!
+        </pre>
+      </div>
+      <nav className={styles.mainNav}>
+        <ul className={styles.mainMenu}>
+          <li onClick={(e) => console.log('clicked', e.target)}>
+            <Icon icon="home"/>
+            <span>Home</span> 
+          </li>
+          <li onClick={(e) => console.log('clicked', e.target)}>
+            <Icon icon="floors"/>   
+            <span>Rooms</span>  
+          </li>
+          <li onClick={(e) => console.log('clicked', e.target)}>
+            <Icon icon="calendar"/> 
+            <span>Date &amp; Time</span>  
+          </li>
+          <li onClick={(e) => console.log('clicked', e.target)}>
+            <Icon icon="stats"/>
+            <span>Stats</span>  
+          </li>
+          <li onClick={(e) => console.log('clicked', e.target)}>
+            <Icon icon="cog"/>
+            <span>Settings</span>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

@@ -1,0 +1,85 @@
+/*
+* Collection of animations used in this project.
+* Each class has a "from to" naming convention.
+*/
+
+$easing: ease;
+$time: 0.7s;
+
+$secondaryEasing: 0.5s;
+$secondaryTiming: ease-in;
+
+.fade{
+  transition: opacity $time $easing;
+  opacity: 0;
+
+  &In {
+    opacity: 1;
+  }
+}
+
+.slideRight {
+  opacity: 0;
+  transform: translate3d(90%, 0, 0);
+  transition: transform $time $easing, opacity $secondaryTiming $secondaryEasing;
+  
+  &In {
+    opacity: 1;
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.slideLeft {
+  opacity: 0;
+  transform: translate3d(-90%, 0, 0);
+  transition: transform $time $easing, opacity $secondaryTiming $secondaryEasing;
+  
+  &In {
+    opacity: 1;
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.slideUp {
+  transform: translate3d(0, 10%, 0);
+  opacity: 0;
+  transition: transform $time $easing, opacity $time $easing;
+  
+  &In {
+    opacity: 1;
+    transform: translate3d(0, 0%, 0);
+  }
+}
+
+.slideDown {
+  transform: translate3d(0, -10%, 0);
+  opacity: 0;
+  transition: transform $time $easing, opacity $time $easing;
+  
+  &In {
+    opacity: 1;
+    transform: translate3d(0, 0%, 0);
+  }
+}
+
+.zoom {
+  transform: scale(1.1);
+  opacity: 0;
+  transition: transform $time $easing, opacity $time $easing;
+
+  &In {
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+  &--out {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform $time $easing, opacity $time $easing;
+
+    &In {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
