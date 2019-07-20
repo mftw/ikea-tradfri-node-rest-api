@@ -3,6 +3,7 @@ import styles from "./App.module.scss";
 // import "./App.scss";
 // import cog from "./assets/icons/cog.svg";
 import Icon from "./components/Icon/Icon"
+import drawing from "./assets/floorplan3d/drawing.svg"
 
 function App() {
   const [data, setData] = useState(null);
@@ -33,6 +34,7 @@ function App() {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.contentArea}>
+        <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/>
         <pre>
           {JSON.stringify(data, null, 2)}
           hej med dig!

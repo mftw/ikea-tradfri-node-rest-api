@@ -2,11 +2,11 @@ import React from 'react';
 import icons from './paths';
 import PropTypes from 'prop-types';
 
-const Icon = ({icon, alt, classes, noDefault}) => {
-  let className = (noDefault ? "" : "icon") + (classes ? " " + classes : "");
+const Icon = ({icon, alt, classes, noDefaultClass}) => {
+  let className = (noDefaultClass ? "" : "icon") + (classes ? " " + classes : "");
 
   // prevent empty class attribute at render
-  className = className === "" ? null : className + "";
+  className = className === "" ? null : className;
 
   if(!icon) {
     return "Missing icon prop"

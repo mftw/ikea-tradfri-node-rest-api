@@ -6,14 +6,19 @@
 html {
   // set sane box-sizing model. Makes padding includes in size
   // prevents a lot of unexpected behavior when using grid and flexbox. 
-  @include fluid-font(getBp('phone'), getBp('desktop'), 12px, 20px);
   box-sizing: border-box;
 
+  // Making the font size responsive
+  @include fluid-font(getBp('phone'), getBp('desktop'), 12px, 20px);
+  
   // Since this is a dashboard, make html and body fill the entire screen.
   width: 100%;
   height: 100%;
+
+  // Prevent accidental touches
   user-select: none;
   user-zoom: none;
+  scroll-behavior: smooth;
 }
 
 // Make everything inherit nice box-sixing model.
