@@ -1,12 +1,25 @@
 
 @import "../../lib/load";
 
-.mainNav {
-  height: $menu-height;
+.mainFooter {
   background: $bg-color;
+  position: relative;
+  height: $menu-height;
+  // bottom: calc(-#{$menu-height} + 20px);
+  overflow: hidden;
+  // transform: translateY(-20px)
+}
+
+.mainNav {
+  overflow: hidden;
+  // transform: translateY(50%);
+  background: inherit;
+  position: absolute;
+  height: 100%;
   // position: fixed;
+  // bottom: calc(-#{$menu-height} + 20px);
+  bottom: -$menu-height;
   // top: 0;
-  bottom: 0;
   // transform: translateY(100%);
   left: 0;
   width: 100%;
