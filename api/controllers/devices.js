@@ -1,4 +1,4 @@
-const { findDevice, changeDevice } = require("../../lib/tradfri/devices");
+const { findDevice, changeDevice, getBatteryLife } = require("../../lib/tradfri/devices");
 const Tradfri = require("../../lib/tradfri/instance");
 
 exports.show_all_devices = async (req, res, next) => {
@@ -53,4 +53,12 @@ exports.set_device = async (req, res, next) => {
   const result = changeDevice(tradfri, device, action);
   return res.status(200).json(result);
   // return res.status(200).json(device);
+};
+
+exports.get_battery_life = async (req, res, next) => {
+  const tradfri = await Tradfri;
+
+  // be nice and return an iterable array. Everyone loves that.
+  //console.log(tradfri.devices);
+  return res.status(200).json(getBatteryLife(tradfri));
 };

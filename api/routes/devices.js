@@ -9,4 +9,6 @@ router.post("/get-single-device", DeviceController.show_single_device);
 
 router.post("/set-device", DeviceController.set_device);
 
+router.post("/get-battery-life", DeviceController.get_battery_life);
+
 module.exports = router;
