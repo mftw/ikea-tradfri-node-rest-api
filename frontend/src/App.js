@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
-// import "./App.scss";
-// import cog from "./assets/icons/cog.svg";
-import Icon from "./components/Icon/Icon"
+import Nav from "./components/Nav/Nav";
 import drawing from "./assets/floorplan3d/drawing.svg"
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+// import pic from "./assets/floorplan3d/living-dining-room.png";
 
 function App() {
   const [data, setData] = useState(null);
@@ -29,42 +29,25 @@ function App() {
         setData(error)
       }
     })()
+
   }, [setData])
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.contentArea}>
-        <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/>
-        <pre>
-          {JSON.stringify(data, null, 2)}
-          hej med dig!
-        </pre>
+    <ErrorBoundary>
+      <div className={styles.mainContainer}>
+        <div className={styles.contentArea}>
+          <div className={styles.contentContainer}>
+            {/* <img src={pic} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
+            <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/>
+            <pre>
+              {JSON.stringify(data, null, 2)}
+              hej med dig!
+            </pre>
+          </div>
+        </div>
+        <Nav />
       </div>
-      <nav className={styles.mainNav}>
-        <ul className={styles.mainMenu}>
-          <li onClick={(e) => console.log('clicked', e.target)}>
-            <Icon icon="home"/>
-            <span>Home</span> 
-          </li>
-          <li onClick={(e) => console.log('clicked', e.target)}>
-            <Icon icon="floors"/>   
-            <span>Rooms</span>  
-          </li>
-          <li onClick={(e) => console.log('clicked', e.target)}>
-            <Icon icon="calendar"/> 
-            <span>Date &amp; Time</span>  
-          </li>
-          <li onClick={(e) => console.log('clicked', e.target)}>
-            <Icon icon="stats"/>
-            <span>Stats</span>  
-          </li>
-          <li onClick={(e) => console.log('clicked', e.target)}>
-            <Icon icon="cog"/>
-            <span>Settings</span>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    </ErrorBoundary>
   );
 }
 

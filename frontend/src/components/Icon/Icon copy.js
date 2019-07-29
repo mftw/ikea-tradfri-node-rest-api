@@ -17,17 +17,11 @@ const Icon = ({icon, alt, classes, noDefaultClass, text}) => {
   return(
     // setting height and width of svg to prevent it from collapsing
     <>
-      {/* <svg width="100%" height="100%" viewBox="0 0 20 20" className={className}>
+      <svg width="100%" height="100%" viewBox="0 0 20 20" className={className}>
         {alt ? <title>{alt}</title> : <title>{icon}</title>}
         {icons[icon]}
       </svg>
-      {!!text && <span>{text}</span>} */}
-        {/* {alt ? <title>{alt}</title> : <title>{icon}</title>} */}
-      <div className={className}>
-
-        {icons[icon]}
-        {!!text && <span>{text}</span>}
-      </div>
+      {!!text && <span>{text}</span>}
     </>
   )
 }
