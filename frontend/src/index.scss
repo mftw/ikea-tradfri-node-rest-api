@@ -1,0 +1,58 @@
+@import "./lib/load";
+
+
+// resets and generel styling.
+
+html {
+  // set sane box-sizing model. Makes padding includes in size
+  // prevents a lot of unexpected behavior when using grid and flexbox. 
+  box-sizing: border-box;
+
+  // Making the font size responsive
+  @include fluid-font(getBp('phone'), getBp('desktop'), 12px, 20px);
+  
+  // Since this is a dashboard, make html and body fill the entire screen.
+  // width: 100%;
+  // height: 100%;
+
+  // Prevent accidental touches
+  user-select: none;
+  user-zoom: none;
+  scroll-behavior: smooth;
+}
+
+// Make everything inherit nice box-sixing model.
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+body {
+  // Dashboard, see html.
+  // height: 100%;
+  // width: 100%;
+  margin: 0;
+
+  // Make sure the page isn't scrollable on the body
+  // overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ul, figure {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}

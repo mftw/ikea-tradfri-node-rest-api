@@ -1,0 +1,81 @@
+@import "./lib/load";
+// $bg-color: #34444e;
+// // using sass color magic. 
+// // lighten() and darken() uses the HSL colorspace to convert values. 
+// // If you want RGB lighten or darken, 
+// // use mix($color, white, $percentage) for lighten, 
+// // and mix($color, black, $percentage) for darken.
+// $fg-color: lighten($bg-color, 10);
+// $menu-height: 7rem;
+
+.mainContainer {
+  position: relative;
+  background: $bg-color;
+  color: white;
+  // The sass compiler will treat variables as strings in a calc() expression
+  // this is done for CSS compatibility (could be a CSS --var() )
+  // using interpolation to explicitly get the value of the variable.
+  height: calc(100vh - #{$menu-height});
+}
+
+.contentArea {
+  height: 100%;
+  overflow-y: auto;
+}
+
+// .mainNav {
+//   height: $menu-height;
+//   background: $bg-color;
+//   position: fixed;
+//   // top: 0;
+//   bottom: 0;
+//   // transform: translateY(100%);
+//   left: 0;
+//   width: 100%;
+//   margin: 0;
+//   padding: 0;
+//   // max-height: 10vh;
+
+//   .mainMenu {
+//     display: flex;
+//     justify-content: space-between;
+//     height: 100%;
+
+//     li {
+//       border: 1px solid $fg-color;
+//       // Sass converts seamlessly between hex and 
+//       background-image: linear-gradient(rgba($fg-color, 0.5) 0%, rgba($fg-color, 0) 60%);
+//       width: 100%;
+//       height: 100%;
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       flex-direction: column;
+//       cursor: pointer;
+//       transition: all 0.3s ease;
+//       // transition: transform 0.3s ease;
+//       box-shadow: none;
+
+//       span {
+//         text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+//       }
+
+
+//       svg {
+//         margin: 0.5rem;
+//         // filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.5));
+//         path {
+//           fill: lighten($bg-color, 40);
+//         }
+//       }
+
+//       &:active {
+//         transform: scale(.9);
+//         // transition: transform 0.2s ease;  
+//         transition: all 0.2s ease;  
+//         // box-shadow: 0px -10px 30px rgba(255, 255, 255, 0.308);
+//         box-shadow: 0rem -0.9rem 3rem rgba(255, 255, 255, 0.308);
+//       }
+//     }
+//   }
+// }

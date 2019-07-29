@@ -1,0 +1,21 @@
+@import './vendor/css/include-media';
+@import './css/typography';
+
+
+$breakpoints: (
+  'phone': 320px,
+  'tablet': 800px,
+  'desktop': 1600px,
+);
+
+$navHeight: 5rem;
+$breakpoint: getBp('desktop');
+
+$bg-color: #34444e;
+// using sass color magic. 
+// lighten() and darken() uses the HSL colorspace to convert values. 
+// If you want RGB lighten or darken, 
+// use mix($color, white, $percentage) for lighten, 
+// and mix($color, black, $percentage) for darken.
+$fg-color: lighten($bg-color, 10);
+$menu-height: 7rem;
