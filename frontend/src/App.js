@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
 import Nav from "./components/Nav/Nav";
-import drawing from "./assets/floorplan3d/drawing.svg"
+import drawing from "./assets/floorplan3d/drawing.svg";
+import Home from "./components/Home/Home";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 // import pic from "./assets/floorplan3d/living-dining-room.png";
 
@@ -11,7 +12,7 @@ function App() {
   useEffect(() => {
     // fetch('http://localhost:3500/devices', {
     //   method: "POST"
-    // }).then(data => 
+    // }).then(data =>
     //   data.json()
     // ).then(data => {
     //   setData(data)
@@ -21,16 +22,15 @@ function App() {
 
     (async () => {
       try {
-        const request = await fetch('http://localhost:3500/devices', {
-          method: "POST"
-        })
-        setData(await request.json())
+        const request = await fetch("http://localhost:3500/devices", {
+          method: "POST",
+        });
+        setData(await request.json());
       } catch (error) {
-        setData(error)
+        setData(error);
       }
-    })()
-
-  }, [setData])
+    })();
+  }, [setData]);
 
   return (
     <ErrorBoundary>
@@ -38,7 +38,8 @@ function App() {
         <div className={styles.contentArea}>
           <div className={styles.contentContainer}>
             {/* <img src={pic} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
-            <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/>
+            {/* <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
+            <Home />
             <pre>
               {JSON.stringify(data, null, 2)}
               hej med dig!

@@ -1,4 +1,8 @@
-const { findDevice, changeDevice, getBatteryLife } = require("../../lib/tradfri/devices");
+const {
+  findDevice,
+  changeDevice,
+  getBatteryLife,
+} = require("../../lib/tradfri/devices");
 const Tradfri = require("../../lib/tradfri/instance");
 
 exports.show_all_devices = async (req, res, next) => {
@@ -28,6 +32,7 @@ exports.show_single_device = async (req, res, next) => {
 };
 
 exports.set_device = async (req, res, next) => {
+  console.log(req.body);
   const { deviceNameOrId, action } = req.body;
 
   if (!deviceNameOrId || !action) {
@@ -46,7 +51,7 @@ exports.set_device = async (req, res, next) => {
   if (!device.alive) {
     console.log("device dead");
     return res.status(200).json({
-      message: `Device ${deviceNameOrId} is currently unreachable e.g power outage`
+      message: `Device ${deviceNameOrId} is currently unreachable e.g power outage`,
     });
   }
   // const result = changeDevice(tradfri, deviceNameOrId, action);

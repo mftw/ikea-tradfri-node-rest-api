@@ -1,0 +1,14 @@
+.lightBulb {
+  width: 4vw;
+  position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  transform: translate(-50%, -50%);
+  svg {
+    g {
+      g:last-child {
+        opacity: 0;
+      }
+    }
+  }
+}
