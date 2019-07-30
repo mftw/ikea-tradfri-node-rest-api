@@ -5,47 +5,38 @@ import Home from "./components/Home/Home";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 // import pic from "./assets/floorplan3d/living-dining-room.png";
 
+const Settings = props => {
+  return <div>this is settings</div>;
+};
+
+// const views = [<Home />, <Settings />];
+const views = {
+  home: <Home />,
+  settings: <Settings />,
+};
+
+const CurrentView = props => {
+  const { view } = props;
+  // const Showview = views[view];
+  // return <Showview {...props} />;
+  if (view in views) {
+    return views[view];
+  }
+  return null;
+};
+
 function App() {
-  // const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  //   // fetch('http://localhost:3500/devices', {
-  //   //   method: "POST"
-  //   // }).then(data =>
-  //   //   data.json()
-  //   // ).then(data => {
-  //   //   setData(data)
-  //   // }).catch(err =>
-  //   //   setData(err)
-  //   // )
-
-  //   (async () => {
-  //     try {
-  //       const request = await fetch("http://10.77.107.137:3500/devices", {
-  //         method: "POST",
-  //       });
-  //       setData(await request.json());
-  //     } catch (error) {
-  //       setData(error);
-  //     }
-  //   })();
-  // }, [setData]);
+  const [view, setView] = useState("home");
 
   return (
     <ErrorBoundary>
       <div className={styles.mainContainer}>
         <div className={styles.contentArea}>
           <div className={styles.contentContainer}>
-            {/* <img src={pic} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
-            {/* <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
-            <Home />
-            {/* <pre>
-              {JSON.stringify(data, null, 2)}
-              hej med dig!
-            </pre> */}
+            <CurrentView view={view} />
           </div>
         </div>
-        <Nav />
+        <Nav changeView={setView} />
       </div>
     </ErrorBoundary>
   );

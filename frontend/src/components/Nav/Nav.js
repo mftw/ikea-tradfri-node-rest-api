@@ -8,20 +8,15 @@ import {
 import { useGesture } from "react-use-gesture";
 import styles from "./Nav.module.scss";
 import Icon from "../Icon/Icon";
-import chevronUp from "../../assets/icons/chevron-up.svg";
 
 export default function Nav(props) {
   const lastLocalY = useRef(0);
   const footerRef = useRef(null);
-  // const containterHeight = footerRef.current
-  //   ? footerRef.current.clientHeight * 2
-  //   : 0;
   const [containerHeight, setContainerHeight] = useState(0);
-  // console.log("TCL: Nav -> containterHeight", containterHeight);
   const halfContainerHeight = containerHeight / 2;
   const quaterContainerHeight = containerHeight / 4;
   const startingPoint = 0;
-  // console.log("TCL: Nav -> footerRef", footerRef)
+  const { changeView } = props;
 
   useEffect(() => {
     if (footerRef.current) {
@@ -30,6 +25,7 @@ export default function Nav(props) {
   }, [footerRef]);
 
   const [{ y }, set] = useSpring(() => ({ y: startingPoint }));
+
   const bind = useGesture(animation => {
     const {
       // eslint-disable-next-line
@@ -149,29 +145,19 @@ export default function Nav(props) {
         }}
       >
         <ul className={styles.mainMenu} ref={footerRef}>
-          <li
-          // onClick={e => console.log("clicked", e.target)}
-          >
+          <li onClick={() => changeView("home")}>
             <Icon classes={styles.icon} icon="home" text="home" />
           </li>
-          <li
-          // onClick={e => console.log("clicked", e.target)}
-          >
+          <li onClick={() => changeView("sfljkdljkdfs")}>
             <Icon classes={styles.icon} icon="floors" text="Rooms" />
           </li>
-          <li
-          // onClick={e => console.log("clicked", e.target)}
-          >
+          <li>
             <Icon classes={styles.icon} icon="calendar" text="Date & Time" />
           </li>
-          <li
-          // onClick={e => console.log("clicked", e.target)}
-          >
+          <li>
             <Icon classes={styles.icon} icon="stats" text="Stats" />
           </li>
-          <li
-          // onClick={e => console.log("clicked", e.target)}
-          >
+          <li onClick={() => changeView("settings")}>
             <Icon classes={styles.icon} icon="cog" text="Settings" />
           </li>
         </ul>

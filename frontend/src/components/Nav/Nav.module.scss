@@ -73,17 +73,15 @@ $navHandleSize: 3rem;
 .mainNavHandle {
   height: $navHandleSize;
   width: $navHandleSize;
-  // background: #f0f;
   position: absolute;
-  // transform: translateY(-100%);
   top: -$navHandleSize;
-  // left: 0;
-  right: 0;
+  right: 0.5rem;
   cursor: pointer;
   svg {
     pointer-events: all;
     path {
       stroke: #fff;
+      fill: #fff;
     }
   }
 }
