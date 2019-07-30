@@ -15,7 +15,7 @@ import styles from "./FloorPlan.module.scss";
 
 // const requestSender = route => fetch("http://localhost:3500/" + route, {method: "POST"});
 const requestSender = (route, req) =>
-  fetch("http://localhost:3500/" + route, {
+  fetch("http://10.77.107.137:3500/" + route, {
     method: "POST",
     body: JSON.stringify(req),
     headers: {

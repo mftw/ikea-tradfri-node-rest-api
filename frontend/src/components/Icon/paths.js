@@ -190,7 +190,7 @@ const icons = {
   ),
   lightBulb: (
     <svg
-      enable-background="new 0 0 512.022 512.022"
+      enableBackground="new 0 0 512.022 512.022"
       version="1.1"
       viewBox="0 0 512.02 512.02"
       xmlns="http://www.w3.org/2000/svg"

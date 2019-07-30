@@ -1,28 +1,25 @@
-
 @import "../../lib/load";
+
+$navHandleSize: 3rem;
 
 .mainFooter {
   background: $bg-color;
   position: relative;
-  height: $menu-height;
-  // bottom: calc(-#{$menu-height} + 20px);
+  height: calc(#{$menu-height} + #{$navHandleSize});
+  bottom: $navHandleSize;
+  // height: $menu-height;
   overflow: hidden;
-  // transform: translateY(-20px)
 }
 
 .mainNav {
-  overflow: hidden;
-  // transform: translateY(50%);
+  // height: 100%;
+  height: $menu-height;
   background: inherit;
   position: absolute;
-  height: 100%;
-  // position: fixed;
-  // bottom: calc(-#{$menu-height} + 20px);
-  bottom: -$menu-height;
-  // top: 0;
-  // transform: translateY(100%);
-  left: 0;
   width: 100%;
+  // bottom: calc(-#{$menu-height} - 1rem);
+  bottom: -$menu-height;
+  left: 0;
   margin: 0;
   padding: 0;
   // max-height: 10vh;
@@ -34,8 +31,11 @@
 
     li {
       border: 1px solid $fg-color;
-      // Sass converts seamlessly between hex and 
-      background-image: linear-gradient(rgba($fg-color, 0.5) 0%, rgba($fg-color, 0) 60%);
+      // Sass converts seamlessly between hex and
+      background-image: linear-gradient(
+        rgba($fg-color, 0.5) 0%,
+        rgba($fg-color, 0) 60%
+      );
       width: 100%;
       height: 100%;
       display: flex;
@@ -51,7 +51,6 @@
         text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
       }
 
-
       svg {
         margin: 0.5rem;
         // filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.5));
@@ -61,12 +60,30 @@
       }
 
       &:active {
-        transform: scale(.9);
-        // transition: transform 0.2s ease;  
-        transition: all 0.2s ease;  
+        transform: scale(0.9);
+        // transition: transform 0.2s ease;
+        transition: all 0.2s ease;
         // box-shadow: 0px -10px 30px rgba(255, 255, 255, 0.308);
         box-shadow: 0rem -0.9rem 3rem rgba(255, 255, 255, 0.308);
       }
+    }
+  }
+}
+
+.mainNavHandle {
+  height: $navHandleSize;
+  width: $navHandleSize;
+  // background: #f0f;
+  position: absolute;
+  // transform: translateY(-100%);
+  top: -$navHandleSize;
+  // left: 0;
+  right: 0;
+  cursor: pointer;
+  svg {
+    pointer-events: all;
+    path {
+      stroke: #fff;
     }
   }
 }
@@ -87,7 +104,6 @@
     text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
   }
 
-
   svg {
     margin: 0.5rem;
     // filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.5));
@@ -96,4 +112,3 @@
     }
   }
 }
-

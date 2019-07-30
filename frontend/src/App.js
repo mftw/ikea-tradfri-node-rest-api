@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
 import Nav from "./components/Nav/Nav";
-import drawing from "./assets/floorplan3d/drawing.svg";
 import Home from "./components/Home/Home";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 // import pic from "./assets/floorplan3d/living-dining-room.png";
 
 function App() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
-  useEffect(() => {
-    // fetch('http://localhost:3500/devices', {
-    //   method: "POST"
-    // }).then(data =>
-    //   data.json()
-    // ).then(data => {
-    //   setData(data)
-    // }).catch(err =>
-    //   setData(err)
-    // )
+  // useEffect(() => {
+  //   // fetch('http://localhost:3500/devices', {
+  //   //   method: "POST"
+  //   // }).then(data =>
+  //   //   data.json()
+  //   // ).then(data => {
+  //   //   setData(data)
+  //   // }).catch(err =>
+  //   //   setData(err)
+  //   // )
 
-    (async () => {
-      try {
-        const request = await fetch("http://localhost:3500/devices", {
-          method: "POST",
-        });
-        setData(await request.json());
-      } catch (error) {
-        setData(error);
-      }
-    })();
-  }, [setData]);
+  //   (async () => {
+  //     try {
+  //       const request = await fetch("http://10.77.107.137:3500/devices", {
+  //         method: "POST",
+  //       });
+  //       setData(await request.json());
+  //     } catch (error) {
+  //       setData(error);
+  //     }
+  //   })();
+  // }, [setData]);
 
   return (
     <ErrorBoundary>
@@ -40,10 +39,10 @@ function App() {
             {/* <img src={pic} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
             {/* <img src={drawing} alt="drawing" style={{display: "block", width:"80%", margin: "5rem auto"}}/> */}
             <Home />
-            <pre>
+            {/* <pre>
               {JSON.stringify(data, null, 2)}
               hej med dig!
-            </pre>
+            </pre> */}
           </div>
         </div>
         <Nav />
