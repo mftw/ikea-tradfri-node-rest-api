@@ -7,11 +7,14 @@
   // The sass compiler will treat variables as strings in a calc() expression
   // this is done for CSS compatibility (could be a CSS --var() )
   // using interpolation to explicitly get the value of the variable.
-  height: calc(100vh - #{$menu-height});
+  height: calc(100% - #{$menu-height});
+  width: 100%;
 }
 
 .contentArea {
+  // position: relative;
   height: 100%;
+  width: 100%;
   overflow-y: auto;
   padding: 0 5%;
   // padding: 4vw;

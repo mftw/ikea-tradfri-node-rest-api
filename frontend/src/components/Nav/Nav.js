@@ -94,13 +94,6 @@ export default function Nav(props) {
     });
   });
 
-  // const transform = y.interpolate({
-  //   map: Math.abs,
-  //   range: [0, halfContainerHeight],
-  //   output: ['scale(0.5) translate3d(0,0px,0)', `scale(1) translate3d(0,${-halfContainerHeight}px,0`],
-  //   extrapolate: 'clamp'
-  // })
-
   function goDown() {
     lastLocalY.current = startingPoint;
     set({ y: startingPoint });
@@ -119,7 +112,7 @@ export default function Nav(props) {
       goUp();
     }
   }
-  const curOpa = y.interpolate({
+  const navOpacity = y.interpolate({
     map: Math.abs,
     range: [startingPoint, halfContainerHeight],
     output: ["0.3", "1"],
@@ -129,8 +122,8 @@ export default function Nav(props) {
   const rotateChevron = y.interpolate({
     map: Math.abs,
     range: [-startingPoint, halfContainerHeight],
-    // output: ["scale(1,1)", "scale(1,-1)"],
-    output: ["rotateX(0deg)", "rotateX(180deg)"],
+    output: ["scale(1,1)", "scale(1,-1)"],
+    // output: ["rotateX(0deg)", "rotateX(180deg)"],
     extrapolate: "clamp",
   });
 
@@ -140,23 +133,28 @@ export default function Nav(props) {
     map: Math.abs,
     range: [-startingPoint, halfContainerHeight],
     // output: ["scale(1,1)", "scale(1,-1)"],
-    output: ["rotateX(-20deg)", "rotateX(0deg)"],
+    output: ["rotateX(-90deg)", "rotateX(0deg)"],
     extrapolate: "clamp",
   });
 
-  function getProps(view) {
+  function navButtonProps(view) {
     const onClick = () => changeView(view);
-    const isActive = currentView === view;
-    if (isActive) {
-      return {
-        onClick,
-        className: styles.activeNav,
-      };
-    } else {
-      return {
-        onClick,
-      };
+    let props = {
+      onClick,
+    };
+    if (currentView === view) {
+      props.className = styles.activeNav;
     }
+    return props;
+  }
+
+  function appearOnMouseOver(autoDisappear = false) {
+    let props = {};
+    if (autoDisappear) {
+      props.onMouseLeave = goDown;
+      props.onMouseEnter = goUp;
+    }
+    return props;
   }
 
   return (
@@ -165,11 +163,9 @@ export default function Nav(props) {
         ref={footerRef}
         className={styles.mainNav}
         {...bind()}
-        // onMouseMove={goUp}
-        // onMouseLeave={goDown}
-        // onClick={toggle}
+        {...appearOnMouseOver()}
         style={{
-          opacity: curOpa,
+          opacity: navOpacity,
           // transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
           transform: yTranslate,
           // transform: interpolate(
@@ -178,9 +174,8 @@ export default function Nav(props) {
           // ),
         }}
       >
-        <ul className={styles.mainMenu}>
-          {/* <li onClick={() => changeView("home")}> */}
-          <li {...getProps("home")}>
+        <animated.ul className={styles.mainMenu} style={{ transform: rotateX }}>
+          <li {...navButtonProps("home")}>
             <Icon classes={styles.icon} icon="home" text="home" />
           </li>
           <li onClick={() => changeView("sfljkdljkdfs")}>
@@ -192,11 +187,10 @@ export default function Nav(props) {
           <li>
             <Icon classes={styles.icon} icon="stats" text="Stats" />
           </li>
-          {/* <li onClick={() => changeView("settings")}> */}
-          <li {...getProps("settings")}>
+          <li {...navButtonProps("settings")}>
             <Icon classes={styles.icon} icon="cog" text="Settings" />
           </li>
-        </ul>
+        </animated.ul>
         <animated.div
           className={styles.mainNavHandle}
           style={{ transform: rotateChevron }}
