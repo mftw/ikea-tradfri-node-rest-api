@@ -14,17 +14,17 @@ $transTime: 0.3s;
     position: absolute;
     transition: opacity $transTime ease-in, transform $transTime ease-out;
     opacity: 0.01;
-    transform: scale(0.9);
+    transform: scale(0.9) translate3d(0, 50px, 0);
     &-active {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1) translate3d(0, 0, 0);
     }
   }
 
   &-leave {
     position: absolute;
     // opacity: 0;
-    transition: opacity $transTime ease-in, transform $transTime ease;
+    transition: opacity $transTime / 2 ease-in, transform $transTime ease;
     opacity: 1;
     transform: scale(1);
     &-active {

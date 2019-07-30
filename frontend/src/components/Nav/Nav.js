@@ -16,7 +16,7 @@ export default function Nav(props) {
   const halfContainerHeight = containerHeight / 2;
   const quaterContainerHeight = containerHeight / 4;
   const startingPoint = 0;
-  const { changeView } = props;
+  const { changeView, currentView } = props;
 
   useEffect(() => {
     if (footerRef.current) {
@@ -25,6 +25,7 @@ export default function Nav(props) {
   }, [footerRef]);
 
   useEffect(() => {
+    // go the fuck up, at mount.
     goUp();
   }, [goUp]);
 
@@ -68,8 +69,6 @@ export default function Nav(props) {
         }
       }
 
-      // y = Math.round(y)
-
       // Setting upper limit
       if (y < -halfContainerHeight) {
         y = -halfContainerHeight;
@@ -83,8 +82,6 @@ export default function Nav(props) {
       if (last) {
         lastLocalY.current = y;
       }
-
-      // console.log( 'y', y, 'ld', aLd, "diff", diff, "yD", yDelta, "llY", llY, "lllY", lastLocalY.current)
 
       return {
         y,
@@ -147,6 +144,21 @@ export default function Nav(props) {
     extrapolate: "clamp",
   });
 
+  function getProps(view) {
+    const onClick = () => changeView(view);
+    const isActive = currentView === view;
+    if (isActive) {
+      return {
+        onClick,
+        className: styles.activeNav,
+      };
+    } else {
+      return {
+        onClick,
+      };
+    }
+  }
+
   return (
     <footer className={styles.mainFooter}>
       <animated.nav
@@ -167,7 +179,8 @@ export default function Nav(props) {
         }}
       >
         <ul className={styles.mainMenu}>
-          <li onClick={() => changeView("home")}>
+          {/* <li onClick={() => changeView("home")}> */}
+          <li {...getProps("home")}>
             <Icon classes={styles.icon} icon="home" text="home" />
           </li>
           <li onClick={() => changeView("sfljkdljkdfs")}>
@@ -179,7 +192,8 @@ export default function Nav(props) {
           <li>
             <Icon classes={styles.icon} icon="stats" text="Stats" />
           </li>
-          <li onClick={() => changeView("settings")}>
+          {/* <li onClick={() => changeView("settings")}> */}
+          <li {...getProps("settings")}>
             <Icon classes={styles.icon} icon="cog" text="Settings" />
           </li>
         </ul>
