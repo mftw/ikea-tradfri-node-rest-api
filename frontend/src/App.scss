@@ -1,0 +1,35 @@
+$transTime: 0.3s;
+
+.main-views {
+  &-appear {
+    transition: opacity 1s ease-in;
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+    }
+  }
+
+  &-enter {
+    position: absolute;
+    transition: opacity $transTime ease-in, transform $transTime ease-out;
+    opacity: 0.01;
+    transform: scale(0.9);
+    &-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &-leave {
+    position: absolute;
+    // opacity: 0;
+    transition: opacity $transTime ease-in, transform $transTime ease;
+    opacity: 1;
+    transform: scale(1);
+    &-active {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+}

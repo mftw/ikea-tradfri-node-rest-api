@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
   // useSprings,
-  // interpolate
+  interpolate,
   useSpring,
   animated,
 } from "react-spring";
@@ -23,6 +23,10 @@ export default function Nav(props) {
       setContainerHeight(footerRef.current.clientHeight * 2);
     }
   }, [footerRef]);
+
+  useEffect(() => {
+    goUp();
+  }, [goUp]);
 
   const [{ y }, set] = useSpring(() => ({ y: startingPoint }));
 
@@ -133,18 +137,36 @@ export default function Nav(props) {
     extrapolate: "clamp",
   });
 
+  const yTranslate = y.interpolate(y => `translate3d(0,${y}px,0)`);
+
+  const rotateX = y.interpolate({
+    map: Math.abs,
+    range: [-startingPoint, halfContainerHeight],
+    // output: ["scale(1,1)", "scale(1,-1)"],
+    output: ["rotateX(-20deg)", "rotateX(0deg)"],
+    extrapolate: "clamp",
+  });
+
   return (
     <footer className={styles.mainFooter}>
       <animated.nav
+        ref={footerRef}
         className={styles.mainNav}
         {...bind()}
+        // onMouseMove={goUp}
+        // onMouseLeave={goDown}
         // onClick={toggle}
         style={{
           opacity: curOpa,
-          transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
+          // transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
+          transform: yTranslate,
+          // transform: interpolate(
+          //   [yTranslate, rotateX],
+          //   (trans, rotateX) => `${trans} ${rotateX}`
+          // ),
         }}
       >
-        <ul className={styles.mainMenu} ref={footerRef}>
+        <ul className={styles.mainMenu}>
           <li onClick={() => changeView("home")}>
             <Icon classes={styles.icon} icon="home" text="home" />
           </li>
@@ -164,8 +186,12 @@ export default function Nav(props) {
         <animated.div
           className={styles.mainNavHandle}
           style={{ transform: rotateChevron }}
-          // {...bind()}
           onClick={toggle}
+          // onClick={(() => {
+          //   // this is an ugly hack to open the navigation bar at mount using an IIFE
+          //   toggle();
+          //   return toggle;
+          // })()}
         >
           <svg version="1.1" width="100%" height="100%" viewBox="0 0 20 20">
             <path
