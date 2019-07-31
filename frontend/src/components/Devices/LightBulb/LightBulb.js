@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   // useSprings,
@@ -29,8 +29,15 @@ const LightBulb = props => {
     styling.position = "absolute";
     styling.transform = "translate(-50%, -50%)";
   }
+  const thisLight = useRef(null);
   const lastLocalXY = useRef([0, 0]);
-  const [{ x, y }, setSpring] = useSpring(() => ({ y: 0, x: 0 }));
+
+  function setLocalStorageXY(cords, id) {
+    console.log(cords);
+    window.localStorage.setItem("" + id, JSON.stringify(cords));
+  }
+  console.log(lastLocalXY.current[0], lastLocalXY.current[1]);
+  const [{ x, y }, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
   const bind = useGesture(animation => {
     const {
       delta: [xDelta, yDelta],
@@ -51,6 +58,7 @@ const LightBulb = props => {
         // let y = yDelta + llX;
 
         if (last) {
+          setLocalStorageXY([x, y], bulbId);
           lastLocalXY.current = [x, y];
         }
         return {
@@ -61,13 +69,47 @@ const LightBulb = props => {
       }
     });
   });
+
+  useEffect(() => {
+    const localStorageXYJSON = window.localStorage.getItem(bulbId);
+    let timer = 500;
+    if (
+      localStorageXYJSON
+      // &&
+      // lastLocalXY.current[0] + lastLocalXY.current[1] === 0
+    ) {
+      // console.log(JSON.parse(localStorageXY));
+      const localStorageXY = JSON.parse(localStorageXYJSON);
+
+      // timer = setTimeout(() => {
+      // }, timer);
+      lastLocalXY.current = localStorageXY;
+      setSpring(() => ({
+        x: localStorageXY[0],
+        y: localStorageXY[1],
+        config: { duration: 1 },
+      }));
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [bulbId, setSpring]);
   const text = name ? name : bulbId;
-  const yTranslate = y.interpolate(y => `translate3d(0,${y}px,0)`);
-  const xTranslate = x.interpolate(x => `translate3d(${x}px,0,0)`);
+  // const yTranslate = y.interpolate(y => `translate3d(0,${y}px,0)`);
+  // const xTranslate = x.interpolate(x => `translate3d(${x}px,0,0)`);
+
   const xyTranslate = interpolate(
-    [yTranslate, xTranslate],
-    (yTranslate, xTranslate) => `${yTranslate} ${xTranslate}`
+    [x, y],
+    (xTranslate, yTranslate) => `translate3d(${xTranslate}px,${yTranslate}px,0)`
   );
+
+  // const rotateX = y.interpolate({
+  //   map: Math.abs,
+  //   range: [-startingPoint, halfContainerHeight],
+  //   // output: ["scale(1,1)", "scale(1,-1)"],
+  //   output: ["rotateX(-90deg)", "rotateX(0deg)"],
+  //   extrapolate: "clamp",
+  // });
 
   function handleOnClick() {
     if (!editMode) clicked(bulbId);
@@ -81,6 +123,7 @@ const LightBulb = props => {
       style={{
         transform: xyTranslate,
       }}
+      ref={thisLight}
     >
       <svg
         enableBackground="new 0 0 512.022 512.022"

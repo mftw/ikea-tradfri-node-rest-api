@@ -54,7 +54,7 @@ export default function FloorPlan(props) {
       try {
         const request = await requestSender("rooms", { test: "test" });
         const response = await request.json();
-        console.log("TCL: FloorPlan -> response", response);
+        // console.log("TCL: FloorPlan -> response", response);
         window.localStorage.setItem("groups", JSON.stringify(response));
         setGroups(response);
       } catch (error) {
