@@ -2,15 +2,8 @@ import React from "react";
 import icons from "./paths";
 import PropTypes from "prop-types";
 
-const Icon = ({
-  icon,
-  alt,
-  classes,
-  noDefaultClass,
-  text,
-  styling,
-  onClick,
-}) => {
+const Icon = props => {
+  const { icon, alt, classes, noDefaultClass, text, styling, onClick } = props;
   let className =
     (noDefaultClass ? "" : "icon") + (classes ? " " + classes : "");
 
@@ -24,7 +17,7 @@ const Icon = ({
     return `Icon ${icon} does not exist`;
   }
   return (
-    <div onClick={onClick} className={className} style={styling}>
+    <div {...props} onClick={onClick} className={className} style={styling}>
       {icons[icon]}
       {!!text && <span>{text}</span>}
     </div>
@@ -36,6 +29,7 @@ Icon.propTypes = {
   alt: PropTypes.string,
   classes: PropTypes.string,
   styling: PropTypes.object,
+  text: PropTypes.string,
 };
 
 export default Icon;

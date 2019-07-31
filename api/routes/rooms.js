@@ -9,4 +9,6 @@ router.post("/get-single-room", RoomController.show_single_room);
 
 router.post("/set-room", RoomController.set_room);
 
+router.post("/set-group", RoomController.set_group);
+
 module.exports = router;

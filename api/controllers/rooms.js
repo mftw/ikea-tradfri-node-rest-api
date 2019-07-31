@@ -60,3 +60,22 @@ exports.set_room = async (req, res, next) => {
     .status(200)
     .json({ message: `Switched ${room.group.name} to scene ${scene.name}` });
 };
+
+// TODO: implement functionality to control all aspects of a group
+exports.set_group = async (req, res, next) => {
+  const Tradfri = await tradfri;
+  const { group: reqGroup, operation, action } = req.body;
+  const foundGroup = findRoom(Tradfri, reqGroup);
+  foundGroup.group.client = Tradfri;
+  // await foundGroup.group.toggle();
+  let response = false;
+
+  // The built-in toggle function doesn't want to turn on groups
+  // await foundGroup.group.toggle();
+  if (foundGroup.group.onOff) {
+    response = await foundGroup.group.turnOff();
+  } else {
+    response = await foundGroup.group.turnOn();
+  }
+  return res.status(200).json({ response });
+};
