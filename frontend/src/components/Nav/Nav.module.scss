@@ -1,28 +1,49 @@
-
 @import "../../lib/load";
 
+$navHandleSize: 3rem;
+
+// TODO: fix chevron glitches by disabling box-shadow on <li>
+
+.mainFooter {
+  // background: $bg-color;
+  position: relative;
+  height: calc(#{$menu-height} + #{$navHandleSize});
+  bottom: $navHandleSize;
+  // background: transparent;
+  // height: $menu-height;
+  overflow: hidden;
+}
+
 .mainNav {
-  height: $menu-height;
+  perspective: 1000px;
   background: $bg-color;
-  // position: fixed;
-  // top: 0;
-  bottom: 0;
-  // transform: translateY(100%);
-  left: 0;
+  // height: 100%;
+  height: $menu-height;
+  // background: inherit;
+  position: absolute;
   width: 100%;
+  // bottom: calc(-#{$menu-height} - 1rem);
+  bottom: -$menu-height;
+  left: 0;
   margin: 0;
   padding: 0;
+  z-index: 100;
   // max-height: 10vh;
 
   .mainMenu {
     display: flex;
     justify-content: space-between;
     height: 100%;
+    will-change: transform;
+    background: inherit;
 
     li {
       border: 1px solid $fg-color;
-      // Sass converts seamlessly between hex and 
-      background-image: linear-gradient(rgba($fg-color, 0.5) 0%, rgba($fg-color, 0) 60%);
+      // Sass converts seamlessly between hex and
+      background-image: linear-gradient(
+        rgba($fg-color, 0.5) 0%,
+        rgba($fg-color, 0) 60%
+      );
       width: 100%;
       height: 100%;
       display: flex;
@@ -38,7 +59,6 @@
         text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
       }
 
-
       svg {
         margin: 0.5rem;
         // filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.5));
@@ -48,12 +68,31 @@
       }
 
       &:active {
-        transform: scale(.9);
-        // transition: transform 0.2s ease;  
-        transition: all 0.2s ease;  
+        transform: scale(0.9);
+        // transition: transform 0.2s ease;
+        transition: all 0.2s ease;
         // box-shadow: 0px -10px 30px rgba(255, 255, 255, 0.308);
         box-shadow: 0rem -0.9rem 3rem rgba(255, 255, 255, 0.308);
       }
+    }
+  }
+}
+.activeNav {
+  background: $fg-color;
+}
+
+.mainNavHandle {
+  height: $navHandleSize;
+  width: $navHandleSize;
+  position: absolute;
+  top: -$navHandleSize;
+  right: 0.5rem;
+  cursor: pointer;
+  svg {
+    pointer-events: all;
+    path {
+      stroke: #fff;
+      fill: #fff;
     }
   }
 }
@@ -74,7 +113,6 @@
     text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
   }
 
-
   svg {
     margin: 0.5rem;
     // filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.5));
@@ -83,4 +121,3 @@
     }
   }
 }
-

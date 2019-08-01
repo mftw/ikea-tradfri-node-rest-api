@@ -1,19 +1,18 @@
 @import "./lib/load";
 
-
 // resets and generel styling.
 
 html {
   // set sane box-sizing model. Makes padding includes in size
-  // prevents a lot of unexpected behavior when using grid and flexbox. 
+  // prevents a lot of unexpected behavior when using grid and flexbox.
   box-sizing: border-box;
 
   // Making the font size responsive
-  @include fluid-font(getBp('phone'), getBp('desktop'), 12px, 20px);
-  
+  @include fluid-font(getBp("phone"), getBp("desktop"), 12px, 20px);
+
   // Since this is a dashboard, make html and body fill the entire screen.
-  // width: 100%;
-  // height: 100%;
+  width: 100%;
+  height: 100%;
 
   // Prevent accidental touches
   user-select: none;
@@ -22,14 +21,16 @@ html {
 }
 
 // Make everything inherit nice box-sixing model.
-*, *:after, *:before {
+*,
+*:after,
+*:before {
   box-sizing: inherit;
 }
 
 body {
   // Dashboard, see html.
-  // height: 100%;
-  // width: 100%;
+  height: 100%;
+  width: 100%;
   margin: 0;
 
   // Make sure the page isn't scrollable on the body
@@ -39,6 +40,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 code {
@@ -46,7 +48,8 @@ code {
     monospace;
 }
 
-ul, figure {
+ul,
+figure {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -55,4 +58,9 @@ ul, figure {
 #root {
   height: 100%;
   width: 100%;
+  background: $bg-color;
 }
+
+// .exclamationCircle {
+//   opacity: 0;
+// }
