@@ -1,0 +1,23 @@
+.iconWrapper {
+  position: relative;
+}
+.iconContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.homeContainer {
+  width: 100%;
+  position: relative;
+}
+
+.floorPlanContainer {
+  width: 100%;
+  position: relative;
+  height: min-content;
+}

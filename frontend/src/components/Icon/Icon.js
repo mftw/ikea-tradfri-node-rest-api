@@ -3,7 +3,7 @@ import icons from "./paths";
 import PropTypes from "prop-types";
 
 const Icon = props => {
-  const { icon, alt, classes, noDefaultClass, text, styling, onClick } = props;
+  const { icon, classes, noDefaultClass, text, styling, onClick } = props;
   let className =
     (noDefaultClass ? "" : "icon") + (classes ? " " + classes : "");
 

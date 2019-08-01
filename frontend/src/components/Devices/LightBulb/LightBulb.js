@@ -8,18 +8,41 @@ import {
   config,
 } from "react-spring";
 import { useGesture } from "react-use-gesture";
-import Icon from "../../Icon/Icon";
+import { requestSender } from "../../../lib/js/helpers/network";
+// import Icon from "../../Icon/Icon";
 import styles from "./LightBulb.module.scss";
+
+const toggleOnClick = bulbId => {
+  console.log("Virker");
+  // const data = {
+  //   deviceNameOrId: bulbId,
+  //   action: {
+  //     name: "toggle",
+  //   },
+  // };
+  const data = {
+    group: "" + bulbId,
+  };
+  console.log(JSON.stringify(data));
+  // const request = requestSender("devices/set-device", data)
+  const request = requestSender("rooms/set-group", data)
+    .then(req => req.json())
+    .then(req => console.log(req));
+  // .catch(error => console.log(error));
+  //Send request to server and toggle light
+};
 
 const LightBulb = props => {
   const {
     topPlacement,
     leftPlacement,
     bulbId,
-    clicked,
     name,
-    editMode,
-    containerSize,
+    movable,
+    // classes,
+    // containerSize,
+    reset,
+    resetCallback,
   } = props;
 
   const styling = {};
@@ -33,29 +56,27 @@ const LightBulb = props => {
   const lastLocalXY = useRef([0, 0]);
 
   function setLocalStorageXY(cords, id) {
-    console.log(cords);
     window.localStorage.setItem("" + id, JSON.stringify(cords));
   }
-  console.log(lastLocalXY.current[0], lastLocalXY.current[1]);
+  // const [{ x, y }, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
   const [{ x, y }, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
   const bind = useGesture(animation => {
     const {
       delta: [xDelta, yDelta],
       // eslint-disable-next-line
       // direction: [xDir, yDir],
-      down,
+      // down,
       last,
       cancel,
     } = animation;
 
     setSpring(() => {
-      if (!editMode) {
+      if (!movable) {
         cancel();
       } else {
-        let x = xDelta + lastLocalXY.current[0];
-        let y = yDelta + lastLocalXY.current[1];
-        // let x = xDelta + llY;
-        // let y = yDelta + llX;
+        const [lastLocalX, lastLocalY] = lastLocalXY.current;
+        let x = xDelta + lastLocalX;
+        let y = yDelta + lastLocalY;
 
         if (last) {
           setLocalStorageXY([x, y], bulbId);
@@ -72,47 +93,37 @@ const LightBulb = props => {
 
   useEffect(() => {
     const localStorageXYJSON = window.localStorage.getItem(bulbId);
-    let timer = 500;
-    if (
-      localStorageXYJSON
-      // &&
-      // lastLocalXY.current[0] + lastLocalXY.current[1] === 0
-    ) {
-      // console.log(JSON.parse(localStorageXY));
+    if (localStorageXYJSON) {
       const localStorageXY = JSON.parse(localStorageXYJSON);
-
-      // timer = setTimeout(() => {
-      // }, timer);
       lastLocalXY.current = localStorageXY;
       setSpring(() => ({
         x: localStorageXY[0],
         y: localStorageXY[1],
+        // Using duration cancels all physics cus ain't nobody got time for that, at mount
+        // disable to get nice animation of bulbs floating into position
         config: { duration: 1 },
       }));
     }
-    return () => {
-      clearTimeout(timer);
-    };
   }, [bulbId, setSpring]);
+
+  useEffect(() => {
+    if (reset) {
+      setSpring(() => ({ x: 0, y: 0, config: config.stiff }));
+      lastLocalXY.current = [0, 0];
+      window.localStorage.removeItem("" + bulbId);
+      resetCallback();
+    }
+  }, [reset, setSpring, bulbId, resetCallback]);
+
   const text = name ? name : bulbId;
-  // const yTranslate = y.interpolate(y => `translate3d(0,${y}px,0)`);
-  // const xTranslate = x.interpolate(x => `translate3d(${x}px,0,0)`);
 
   const xyTranslate = interpolate(
     [x, y],
     (xTranslate, yTranslate) => `translate3d(${xTranslate}px,${yTranslate}px,0)`
   );
 
-  // const rotateX = y.interpolate({
-  //   map: Math.abs,
-  //   range: [-startingPoint, halfContainerHeight],
-  //   // output: ["scale(1,1)", "scale(1,-1)"],
-  //   output: ["rotateX(-90deg)", "rotateX(0deg)"],
-  //   extrapolate: "clamp",
-  // });
-
   function handleOnClick() {
-    if (!editMode) clicked(bulbId);
+    if (!movable) toggleOnClick(bulbId);
   }
 
   return (
@@ -164,14 +175,23 @@ const LightBulb = props => {
           </g>
         </g>
       </svg>
-      {!!text && <span>{text}</span>}
+      <span>{text}</span>
     </animated.div>
   );
 };
 
 export default LightBulb;
 
+LightBulb.defaultProps = {
+  reset: false,
+  resetCallback: () => {}, // noop
+};
+
 LightBulb.propTypes = {
   topPlacement: PropTypes.string,
   leftPlacement: PropTypes.string,
+  bulbId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  name: PropTypes.string,
+  reset: PropTypes.bool,
+  resetCallback: PropTypes.func,
 };

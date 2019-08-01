@@ -51,7 +51,7 @@ function App() {
         <div className={styles.contentArea}>
           <CurrentView view={view} />
         </div>
-        <Nav changeView={setView} currentView={view} />
+        <Nav changeView={setView} currentView={view} views={views} />
       </div>
     </ErrorBoundary>
   );
