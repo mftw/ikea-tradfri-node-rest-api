@@ -13,23 +13,14 @@ import { requestSender } from "../../../lib/js/helpers/network";
 import styles from "./LightBulb.module.scss";
 
 const toggleOnClick = bulbId => {
-  console.log("Virker");
-  // const data = {
-  //   deviceNameOrId: bulbId,
-  //   action: {
-  //     name: "toggle",
-  //   },
-  // };
   const data = {
     group: "" + bulbId,
   };
   console.log(JSON.stringify(data));
-  // const request = requestSender("devices/set-device", data)
-  const request = requestSender("rooms/set-group", data)
+  requestSender("rooms/set-group", data)
     .then(req => req.json())
     .then(req => console.log(req));
-  // .catch(error => console.log(error));
-  //Send request to server and toggle light
+  //Send request to server and toggle group
 };
 
 const LightBulb = props => {
