@@ -1,0 +1,23 @@
+.remote {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 4vw;
+  height: min-content;
+  margin: 0 6vw;
+  // svg {
+  //   width: 4vw;
+  //   height: 4vw;
+  //   g {
+  //     g:last-child {
+  //       opacity: 0;
+  //     }
+  //   }
+  // }
+
+  span {
+    // Make sure the icon text doesn't wrap.
+    white-space: nowrap;
+  }
+}

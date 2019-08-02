@@ -1,0 +1,36 @@
+$icon-size: 6vw;
+.remote {
+  position: relative;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: $icon-size;
+  height: min-content;
+  margin: 0 $icon-size;
+}
+.mainIcon {
+  width: $icon-size;
+  height: $icon-size;
+  z-index: 100;
+  // Giant font size cus wierd svg scaling
+  text {
+    font-size: 60px;
+    text-align: center;
+    line-height: 1.25;
+    word-spacing: 0;
+    // font-family: monospace;
+  }
+}
+.childIcon {
+  position: absolute;
+  z-index: 50;
+  // Make sure the icon text doesn't wrap.
+  // transform: translate(-100%, -100%);
+  white-space: nowrap;
+}
+
+.childIconSvg {
+  width: $icon-size/2;
+  height: $icon-size/2;
+}

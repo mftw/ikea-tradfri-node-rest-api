@@ -1,0 +1,61 @@
+@import "../../../lib/load";
+
+.editMenu {
+  display: flex;
+  // height: 4rem;
+  width: 6rem;
+  // width: min-content;
+  border: 1px solid black;
+  align-items: center;
+
+  li {
+    // padding: 1rem;
+    // padding: 0;
+    // margin: 0;
+    // border: 1px solid red;
+    display: flex;
+    align-items: center;
+    height: min-content;
+    // box-sizing: content-box;
+  }
+}
+
+.menuIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  z-index: 100;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    perspective: 1000px;
+    path {
+      transform-origin: 33% 100%;
+    }
+  }
+
+  span {
+    font-size: 0.5rem;
+  }
+}
+
+.editIcon {
+  @extend .menuIcon;
+  z-index: 200;
+  background: rgb(74, 110, 209);
+  height: 3.2rem;
+  width: 3.2rem;
+}
+
+.deleteIcon {
+  @extend .menuIcon;
+  background: rgb(74, 209, 169);
+  color: black;
+}

@@ -4,15 +4,15 @@ import styles from "./FloorPlan.module.scss";
 export default function FloorPlan(props) {
   const { editMode } = props;
   const svgStyle = {
-    display: "block",
-    height: "100%",
-    width: "100%",
+    // display: "block",
+    // height: "100%",
+    // width: "100%",
   };
 
   return (
     <div
       className={styles.container}
-      style={{ border: editMode ? "1px solid red" : "unset" }}
+      // style={{ border: editMode ? "1px solid red" : "unset" }}
     >
       <svg
         version="1.1"
@@ -20,6 +20,7 @@ export default function FloorPlan(props) {
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         style={svgStyle}
+        className={styles.floorPlanSvg}
       >
         <defs>
           <clipPath id="clip3">
@@ -145,6 +146,12 @@ export default function FloorPlan(props) {
           </g>
         </g>
       </svg>
+      <span
+        className={styles.editModeText}
+        style={{ opacity: editMode ? 1 : 0 }}
+      >
+        EDIT MODE
+      </span>
     </div>
   );
 }

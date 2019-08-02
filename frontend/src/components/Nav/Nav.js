@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
   // useSprings,
-  interpolate,
   useSpring,
   animated,
 } from "react-spring";
@@ -24,12 +23,12 @@ export default function Nav(props) {
     }
   }, [footerRef]);
 
-  useEffect(() => {
-    // go the fuck up, at mount.
-    goUp();
-  }, [goUp]);
+  // useEffect(() => {
+  //   // go the fuck up, at mount.
+  //   goUp();
+  // }, [goUp]);
 
-  const [{ y }, set] = useSpring(() => ({ y: startingPoint }));
+  const [{ y }, setSpring] = useSpring(() => ({ y: startingPoint }));
 
   const bind = useGesture(animation => {
     const {
@@ -41,7 +40,7 @@ export default function Nav(props) {
       last,
     } = animation;
 
-    set(() => {
+    setSpring(() => {
       // console.log(containterHeight);
       const generelDir = {
         up: yDir < 0,
@@ -94,15 +93,25 @@ export default function Nav(props) {
     });
   });
 
+  const cbGoUp = useCallback(() => {
+    lastLocalY.current = -halfContainerHeight;
+    setSpring({ y: -halfContainerHeight });
+  }, [setSpring, halfContainerHeight]);
+
+  useEffect(() => {
+    // go the fuck up, at mount.
+    cbGoUp();
+  }, [cbGoUp]);
+
   function goDown() {
     lastLocalY.current = startingPoint;
-    set({ y: startingPoint });
+    setSpring({ y: startingPoint });
   }
   // goDown();
 
   function goUp() {
     lastLocalY.current = -halfContainerHeight;
-    set({ y: -halfContainerHeight });
+    setSpring({ y: -halfContainerHeight });
   }
 
   function toggle() {
@@ -166,12 +175,7 @@ export default function Nav(props) {
         {...appearOnMouseOver()}
         style={{
           opacity: navOpacity,
-          // transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
           transform: yTranslate,
-          // transform: interpolate(
-          //   [yTranslate, rotateX],
-          //   (trans, rotateX) => `${trans} ${rotateX}`
-          // ),
         }}
       >
         <animated.ul className={styles.mainMenu} style={{ transform: rotateX }}>
@@ -195,11 +199,6 @@ export default function Nav(props) {
           className={styles.mainNavHandle}
           style={{ transform: rotateChevron }}
           onClick={toggle}
-          // onClick={(() => {
-          //   // this is an ugly hack to open the navigation bar at mount using an IIFE
-          //   toggle();
-          //   return toggle;
-          // })()}
         >
           <svg version="1.1" width="100%" height="100%" viewBox="0 0 20 20">
             <path
