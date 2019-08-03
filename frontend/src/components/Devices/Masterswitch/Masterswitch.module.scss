@@ -5,14 +5,19 @@ $icon-size: 6vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: $icon-size;
   height: min-content;
   margin: 0 $icon-size;
+  // border-radius: 0.5rem;
+  // overflow: hidden;
 }
 .mainIcon {
   width: $icon-size;
   height: $icon-size;
   z-index: 100;
+  // border-radius: 0.9rem;
+
   // Giant font size cus wierd svg scaling
   text {
     font-size: 60px;
@@ -25,12 +30,26 @@ $icon-size: 6vw;
 .childIcon {
   position: absolute;
   z-index: 50;
-  // Make sure the icon text doesn't wrap.
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   // transform: translate(-100%, -100%);
-  white-space: nowrap;
+  svg {
+    width: $icon-size/1.5;
+    height: $icon-size/1.5;
+  }
 }
 
 .childIconSvg {
   width: $icon-size/2;
   height: $icon-size/2;
+}
+
+.iconText {
+  // color: white;
+  font-size: 0.8rem;
+  // Make sure the icon text doesn't wrap.
+  white-space: nowrap;
 }

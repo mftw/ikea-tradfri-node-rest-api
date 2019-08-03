@@ -18,18 +18,74 @@ import styles from "./Masterswitch.module.scss";
  *
  */
 
-const ChildIcon = React.forwardRef((props, ref) => {
-  console.log("TCL: props", props);
+function calcDir(itemNumber, y) {
+  // y => `translate3d(${-y}px,${-y}px,0)`;
+  switch (itemNumber) {
+    case 0: {
+      return `translate3d(0px,${-y}px,0)`;
+    }
+    case 1: {
+      return `translate3d(${y}px,0px,0)`;
+    }
+    case 2: {
+      return `translate3d(0px,${y}px,0)`;
+    }
+    case 3: {
+      return `translate3d(${-y}px,0px,0)`;
+    }
+    default: {
+      return `translate3d(${-y}px,${y}px,0)`;
+    }
+  }
+}
+
+const ChildIcon = props => {
+  const { cords, className, containerSize, number, text, request } = props;
+
+  // const divRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (divRef.current) {
+  //     divSize.current = [
+  //       divRef.current.clientWidth,
+  //       divRef.current.clientHeight,
+  //     ];
+  //   }
+  // }, [divRef]);
+
+  const translateInter = interpolate(
+    [
+      cords.interpolate({
+        map: Math.abs,
+        range: [0, 100],
+        // output: ["scale(1,1)", "scale(1,-1)"],
+        // output: [0, divSize.current[0]],
+        output: [0, containerSize[0]],
+        extrapolate: "clamp",
+      }),
+    ],
+    y => calcDir(number, y)
+  );
+
+  function handleClick(e) {
+    e.stopPropagation();
+    request();
+  }
+
   return (
     <animated.div
+      // ref={divRef}
+      className={className}
+      onMouseDown={e => e.stopPropagation()}
+      onTouchStart={e => e.stopPropagation()}
+      onClick={handleClick}
       // style={{
-      //   opacity: springOpacity.interpolate(val => val),
-      //   // opacity: interOpacity,
-      //   // opacity: holdTrigger ? 1 : 0,
-      //   // transition: "opacity 0.3s ease",
+      //   transform: props.cords,
       // }}
-      {...props}
-      ref={ref}
+      style={{
+        transform: translateInter,
+      }}
+      // ref={ref}
       // className={styles.chilIcon}
     >
       <svg
@@ -37,7 +93,7 @@ const ChildIcon = React.forwardRef((props, ref) => {
         version="1.1"
         viewBox="0 0 512 512"
         xmlns="http://www.w3.org/2000/svg"
-        style={styles.childIconSvg}
+        // style={styles.childIconSvg}
       >
         <circle cx="256" cy="256" r="225" fill="#ff5364" strokeWidth="2.832" />
         <g
@@ -49,9 +105,32 @@ const ChildIcon = React.forwardRef((props, ref) => {
           <path d="m256 320.9c-7.8401 0-14.197-6.3557-14.197-14.197v-28.393c0-7.8401 6.3557-14.197 14.197-14.197s14.197 6.3557 14.197 14.197v28.393c0 7.8401-6.3574 14.197-14.197 14.197z" />
         </g>
       </svg>
+      <span className={styles.iconText}>{text || "Icon"}</span>
     </animated.div>
   );
-});
+};
+
+const childButtons = [
+  {
+    text: "Sluk alt",
+    request: async () => requestSender("masterswitch", { confirmation: true }),
+  },
+  {
+    text: "Tænd alt",
+    request: async () =>
+      requestSender("masterswitch/all-on", { confirmation: true }),
+  },
+  {
+    text: "Sa Force",
+    request: async () =>
+      requestSender("masterswitch", { confirmation: true, force: true }),
+  },
+  {
+    text: "Ta Force",
+    request: async () =>
+      requestSender("masterswitch/all-on", { confirmation: true, force: true }),
+  },
+];
 
 function useOutsideAlerter(initialIsVisible) {
   const [isComponentClicked, setIsComponentVisible] = useState(
@@ -70,8 +149,10 @@ function useOutsideAlerter(initialIsVisible) {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside, true);
+    document.addEventListener("touchstart", handleClickOutside, true);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside, true);
+      document.removeEventListener("touchstart", handleClickOutside, true);
     };
   });
 
@@ -103,6 +184,7 @@ const Masterswitch = props => {
     reset,
     resetCallback,
   } = props;
+  const text = name ? name : remoteId;
 
   const styling = {};
   if (topPlacement) styling.top = topPlacement;
@@ -120,7 +202,9 @@ const Masterswitch = props => {
       .assign({ cords })
       .write();
   }
-  // const holdTime = 1000;
+
+  const holdTime = 500;
+
   const holdTimer = useRef(false);
   const skipNextClickEvent = useRef(false);
 
@@ -132,18 +216,15 @@ const Masterswitch = props => {
   }, [holdTimer]);
   // const [holdTrigger, setHoldTrigger] = useState(false);
   const triggerRef = useRef(false);
-  const { ref, isComponentClicked } = useOutsideAlerter(true);
+  const { ref: containerRef, isComponentClicked } = useOutsideAlerter(true);
+
   const [
-    { xCordsChildren, yCordsChildren },
+    { xCordsChildren, zIndex: topOfIconzIndex },
     setTransformChildSpring,
   ] = useSpring(() => ({
-    // opacity: 0,
-    // from: { opacity: 1 },
-    // transform: "translate3d(0,0,0)",
-    // transform: "translate3d(120%,120%,0)",
-    // from: { transform: "translate3d(0,0,0)" },
     xCordsChildren: 0,
     yCordsChildren: 0,
+    zIndex: 250,
   }));
 
   // const [{ x, y }, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
@@ -152,7 +233,6 @@ const Masterswitch = props => {
     y: 0,
   }));
 
-  const holdTime = 500;
   const touchStart = useRef(false);
   const bind = useGesture(animation => {
     const {
@@ -248,12 +328,21 @@ const Masterswitch = props => {
         // transform: "translate3d(0,0,0)",
         xCordsChildren: 0,
         yCordsChildren: 0,
+        zIndex: 250,
         // from: { transform: "translate3d(120%,120%,0)", },
       }));
     }
   }, [isComponentClicked, triggerRef, setTransformChildSpring]);
 
-  const text = name ? name : remoteId;
+  const containerSize = useRef([0, 0]);
+  useEffect(() => {
+    if (containerRef.current) {
+      containerSize.current = [
+        containerRef.current.clientWidth,
+        containerRef.current.clientHeight,
+      ];
+    }
+  }, [containerRef]);
 
   const xyTranslate = interpolate(
     [x, y],
@@ -276,7 +365,6 @@ const Masterswitch = props => {
   }
 
   function handleTriggerToggle(e) {
-    // setHoldTrigger(!holdTrigger);
     if (triggerRef.current) {
       handleTriggerOff();
     } else {
@@ -285,34 +373,19 @@ const Masterswitch = props => {
   }
   function handleTriggerOn(e) {
     triggerRef.current = true;
-    // setTransformChildSpring(() => ({
-    //   opacity: 1,
-    // }));
     setTransformChildSpring(() => ({
-      // transform: "translate3d(0,0,0)",
-      // transform: "translate3d(120%,120%,0)",
-      xCordsChildren: 120,
-      yCordsChildren: 120,
-      // from: { transform: "translate3d(120%,120%,0)", },
+      xCordsChildren: 100,
+      yCordsChildren: 100,
+      zIndex: 500,
     }));
-    // setHoldTrigger(true);
   }
   function handleTriggerOff(e) {
     triggerRef.current = false;
     setTransformChildSpring(() => ({
       xCordsChildren: 0,
       yCordsChildren: 0,
-      // transform: "translate3d(0,0,0)",
-      // transform: "translate3d(120%,120%,0)",
-      // from: { transform: "translate3d(120%,120%,0)", },
+      zIndex: 250,
     }));
-    // setTransformChildSpring(() => ({
-    //   opacity: 0,
-    // }));
-  }
-
-  function handleDoubleClick(e) {
-    handleTriggerToggle();
   }
 
   function handlePointerLeave() {
@@ -320,25 +393,30 @@ const Masterswitch = props => {
     resetHoldTimer();
   }
 
-  // const childTranslate = interpolate(
-  //   [xCordsChildren.interpolate(v => v), yCordsChildren.interpolate(v => v)],
-  //   (xChs, yChs) => {
-  //     console.log(`transform3d(${xChs}%, ${yChs}%,0%)`);
-  //     return `translate3d(${xChs}%, ${yChs}%,0%)`;
-  //   }
-  // );
-  // const childTranslate2 = interpolate(
-  //   [xCordsChildren.interpolate(v => v)],
-  //   xChs => {
-  //     console.log(`transform3d(${xChs}%, ${xChs}%,0%)`);
-  //     return `translate3d(${xChs}%, ${xChs}%,0%)`;
-  //   }
-  // );
+  const scaleBtnInter = xCordsChildren.interpolate({
+    map: Math.abs,
+    range: [0, 100],
+    output: ["scale(1)", "scale(1.5)"],
+    // output: ["rotateX(0deg)", "rotateX(180deg)"],
+    extrapolate: "clamp",
+  });
+
+  const moveBtnInter = xCordsChildren.interpolate({
+    map: Math.abs,
+    range: [0, 100],
+    output: ["translate3d(0,0%,0)", "translate3d(0,33%,0)"],
+    // output: ["rotateX(0deg)", "rotateX(180deg)"],
+    extrapolate: "clamp",
+  });
+
+  const buttonAnimation = interpolate(
+    [scaleBtnInter, moveBtnInter],
+    (xTranslate, yTranslate) => `${xTranslate} ${yTranslate}`
+  );
 
   return (
     <animated.div
       {...bind()}
-      // onDoubleClick={handleDoubleClick}
       onClick={handleOnClick}
       className={styles.remote}
       style={{
@@ -346,7 +424,7 @@ const Masterswitch = props => {
       }}
       onMouseUp={handlePointerLeave}
       onTouchEnd={handlePointerLeave}
-      ref={ref}
+      ref={containerRef}
     >
       <svg
         enableBackground="new 0 0 512 512"
@@ -356,94 +434,65 @@ const Masterswitch = props => {
         className={styles.mainIcon}
       >
         <path
-          d="m11.22 17.655h489.56c6.197 0 11.22 5.023 11.22 11.22v454.25c0 6.197-5.023 11.22-11.22 11.22h-489.56c-6.197 0-11.22-5.023-11.22-11.22v-454.25c0-6.197 5.023-11.22 11.22-11.22z"
-          fill="#41767F"
+          d="m11.22 23.655h489.56c6.197 0 11.22 5.023 11.22 11.22v454.25c0 6.197-5.023 11.22-11.22 11.22h-489.56c-6.197 0-11.22-5.023-11.22-11.22v-454.25c0-6.197 5.023-11.22 11.22-11.22z"
+          fill="#41767f"
         />
-        <path
-          d="m512 28.866v147.69h-512v-147.69c0.01-6.188 5.023-11.201 11.211-11.211h489.58c6.188 0.01 11.201 5.024 11.211 11.211z"
-          fill="#2C3E50"
+        <animated.path
+          d="m11.211 11.654c-6.188 0.01-11.201 5.0229-11.211 11.211v147.69h512v-147.69h2e-3c-0.01-6.187-5.0229-11.201-11.211-11.211zm134.81 16.357 110.07 32.414 109.89-32.414v126.19h-59.973v-24.613h14.732v-59.281l-42.119 11.961v71.934h-45.24v-71.934l-42.119-11.961v59.281h14.732v24.613h-59.973z"
+          fill="#2c3e50"
+          style={{
+            transform: buttonAnimation,
+            transformOrigin: "center",
+            zIndex: topOfIconzIndex,
+          }}
         />
-        <path
-          d="m85.168 52.966h341.66c3.159 0 5.72 2.561 5.72 5.72v76.835c0 3.159-2.561 5.72-5.72 5.72h-341.66c-3.159 0-5.72-2.561-5.72-5.72v-76.835c-1e-3 -3.159 2.56-5.72 5.72-5.72z"
-          fill="#65ddb9"
-        />
-        <circle
-          cx="256"
-          cy="335.1"
-          r="127.77"
-          fill="#ff5364"
-          strokeWidth="1.6082"
-        />
-        <g fill="#fff" strokeWidth="1.6082">
-          <path d="m256 406.08c-25.362 5e-3 -48.8-13.524-61.483-35.487s-12.684-49.025-3e-3 -70.989c3.9466-6.7321 12.588-9.0174 19.345-5.1142 6.7578 3.9016 9.0994 12.528 5.2428 19.312-10.304 17.901-6.2785 40.616 9.5497 53.885 15.828 13.27 38.897 13.27 54.725 0 15.828-13.27 19.854-35.984 9.5497-53.885-3.8566-6.7835-1.515-15.41 5.2428-19.312 6.7578-3.9016 15.399-1.6179 19.345 5.1142 12.684 21.968 12.679 49.037-0.01 71.002-12.691 21.965-36.139 35.489-61.505 35.474z" />
-          <path d="m256 320.9c-7.8401 0-14.197-6.3557-14.197-14.197v-28.393c0-7.8401 6.3557-14.197 14.197-14.197s14.197 6.3557 14.197 14.197v28.393c0 7.8401-6.3574 14.197-14.197 14.197z" />
-        </g>
-        <text
-          x="255.75586"
-          y="112.01561"
-          fill="#000000"
-          textAnchor="middle"
-          xmlSpace="preserve"
-        >
-          <tspan x="255.75586" y="112.01561">
-            {text ? text : "Masterswitch"}
-          </tspan>
-        </text>
-      </svg>
-
-      {/* <ChildIcon
-        style={{
-          // opacity: transform.interpolate(val => val),
-          // opacity: interOpacity,
-          // opacity: holdTrigger ? 1 : 0,
-          // transition: "opacity 0.3s ease",
-          // transform: childTranslate,
-          transform: xCordsChildren.interpolate(xCordC => {
-            return `translate3d(${xCordC}px, ${xCordC}px,0px)`;
-          }),
-        }}
-        className={styles.childIcon}
-      /> */}
-      <animated.section
-        style={{
-          // opacity: transform.interpolate(val => val),
-          // opacity: interOpacity,
-          // opacity: holdTrigger ? 1 : 0,
-          // transition: "opacity 0.3s ease",
-          // transform: childTranslate2,
-          transform: xCordsChildren.interpolate(xCordC => {
-            return `translate3d(${xCordC}px, ${xCordC}px,0px)`;
-          }),
-        }}
-        className={styles.childIcon}
-        onMouseDown={e => e.stopPropagation()}
-        onTouchStart={e => e.stopPropagation()}
-        onClick={e => e.stopPropagation()}
-      >
-        <svg
-          enableBackground="new 0 0 512 512"
-          version="1.1"
-          viewBox="0 0 512 512"
-          xmlns="http://www.w3.org/2000/svg"
-          className={styles.childIconSvg}
+        <animated.g
+          transform="translate(3.2542 .678)"
+          style={{
+            opacity: xCordsChildren.interpolate(xCord => -(xCord / 100) + 1),
+            transform: xCordsChildren.interpolate(
+              xCord =>
+                `scale(${-(xCord / 100) + 1}) translate3d(0,${-(xCord / 100) +
+                  1}px,0)`
+            ),
+            transformOrigin: "center",
+          }}
         >
           <circle
-            cx="256"
-            cy="256"
-            r="225"
+            cx="252.75"
+            cy="333.1"
+            r="176.58"
             fill="#ff5364"
-            strokeWidth="2.832"
+            strokeWidth="2.2226"
+            // style={{ transform: scaleInter, transformOrigin: "center" }}
           />
           <g
-            transform="matrix(1.761 0 0 1.761 -194.83 -334.1)"
+            transform="matrix(1.382 0 0 1.382 -101.07 -130)"
             fill="#fff"
             strokeWidth="1.6082"
           >
             <path d="m256 406.08c-25.362 5e-3 -48.8-13.524-61.483-35.487s-12.684-49.025-3e-3 -70.989c3.9466-6.7321 12.588-9.0174 19.345-5.1142 6.7578 3.9016 9.0994 12.528 5.2428 19.312-10.304 17.901-6.2785 40.616 9.5497 53.885 15.828 13.27 38.897 13.27 54.725 0s19.854-35.984 9.5497-53.885c-3.8566-6.7835-1.515-15.41 5.2428-19.312 6.7578-3.9016 15.399-1.6179 19.345 5.1142 12.684 21.968 12.679 49.037-0.01 71.002-12.691 21.965-36.139 35.489-61.505 35.474z" />
             <path d="m256 320.9c-7.8401 0-14.197-6.3557-14.197-14.197v-28.393c0-7.8401 6.3557-14.197 14.197-14.197s14.197 6.3557 14.197 14.197v28.393c0 7.8401-6.3574 14.197-14.197 14.197z" />
           </g>
-        </svg>
-      </animated.section>
+        </animated.g>
+      </svg>
+      {childButtons.map(({ text, request }, i) => (
+        <ChildIcon
+          // style={{
+          //   transform: xCordsChildren.interpolate(xCordC => {
+          //     return `translate3d(${xCordC}px, ${xCordC}px,0px)`;
+          //   }),
+          // }}
+          key={"ms-icon-child-" + i}
+          cords={xCordsChildren}
+          className={styles.childIcon}
+          containerSize={containerSize.current}
+          number={i}
+          text={text}
+          request={request}
+          // testOs={triggerRef.current}
+        />
+      ))}
     </animated.div>
   );
 };
