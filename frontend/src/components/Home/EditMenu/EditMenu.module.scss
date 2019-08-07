@@ -1,61 +1,90 @@
 @import "../../../lib/load";
 
+$total-width: 6vw;
+$total-height: $total-width / 2;
+
 .editMenu {
   display: flex;
   // height: 4rem;
-  width: 6rem;
+  width: $total-width;
   // width: min-content;
-  border: 1px solid black;
+  // border: 1px solid black;
   align-items: center;
+  // position: relative;
 
   li {
+    // position: absolute;
     // padding: 1rem;
     // padding: 0;
     // margin: 0;
     // border: 1px solid red;
     display: flex;
     align-items: center;
-    height: min-content;
+    // height: min-content;
     // box-sizing: content-box;
   }
 }
 
 .menuIcon {
+  // background: $bg-color;
+  // position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
+  height: $total-height;
+  max-height: $total-height;
+  width: $total-width/2;
+  max-width: $total-width/2;
+  // border-radius: 50%;
   z-index: 100;
   cursor: pointer;
+  // position: absolute;
 
   svg {
-    display: block;
-    height: 2rem;
-    width: 2rem;
-    perspective: 1000px;
-    path {
-      transform-origin: 33% 100%;
-    }
+    fill: lighten($bg-color, 25);
+    // &:hover {
+    //   fill: lighten($bg-color, 35);
+    // }
   }
 
   span {
-    font-size: 0.5rem;
+    // margin: 0;
+    // padding: 0;
+    // height: 1rem;
+    font-size: $total-height / 5;
+    // transform: translateY(-75%);
   }
 }
 
 .editIcon {
   @extend .menuIcon;
   z-index: 200;
-  background: rgb(74, 110, 209);
-  height: 3.2rem;
-  width: 3.2rem;
+  // background: rgb(74, 110, 209);
 }
 
 .deleteIcon {
   @extend .menuIcon;
-  background: rgb(74, 209, 169);
-  color: black;
+  // background: rgba(156, 156, 156, 0.39);
+  // color: #ececec;
+  height: $total-height - 0.2;
+  width: ($total-width / 2) - 0.2;
+  display: flex;
+  justify-content: space-between;
+
+  // > * {
+  //   // position: absolute;
+  //   // justify-self: flex-end;
+  //   // align-self: flex-end;
+  // }
+
+  svg {
+    // transform: translateY(-10%);
+    // height: 50%;
+    // align-self: flex-start;
+    // justify-self: flex-start;
+  }
+  span {
+    transform: translateY(-20%);
+  }
 }

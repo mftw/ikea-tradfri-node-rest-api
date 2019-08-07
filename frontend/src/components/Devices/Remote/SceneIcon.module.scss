@@ -1,0 +1,136 @@
+@import "../../../lib/load";
+$icon-size: 6vw;
+// .remote {
+//   position: relative;
+//   color: black;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: $icon-size;
+//   height: min-content;
+//   margin: 0 $icon-size / 2;
+//   // border-radius: 0.5rem;
+//   // overflow: hidden;
+// }
+// .mainIcon {
+//   width: $icon-size;
+//   height: $icon-size;
+//   z-index: 100;
+//   // border-radius: 0.9rem;
+
+//   // Giant font size cus wierd svg scaling
+//   text {
+//     font-size: 60px;
+//     text-align: center;
+//     line-height: 1.25;
+//     word-spacing: 0;
+//     // font-family: monospace;
+//   }
+// }
+
+// /// Mixin to place items on a circle
+// /// @author Hugo Giraudel
+// /// @author Ana Tudor
+// /// @param {Integer} $item-count - Number of items on the circle
+// /// @param {Length} $circle-size - Large circle size
+// /// @param {Length} $item-size - Single item size
+// @mixin on-circle($item-count, $circle-size, $item-size) {
+//   position: relative;
+//   width: $circle-size;
+//   height: $circle-size;
+//   padding: 0;
+//   border-radius: 50%;
+//   list-style: none;
+
+//   > * {
+//     display: block;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     width: $item-size;
+//     height: $item-size;
+//     margin: -($item-size / 2);
+
+//     $angle: (360 / $item-count);
+//     $rot: 0;
+
+//     @for $i from 1 through $item-count {
+//       &:nth-of-type(#{$i}) {
+//         transform: rotate($rot * 1deg)
+//           translate($circle-size / 2)
+//           rotate($rot * -1deg);
+//       }
+
+//       $rot: $rot + $angle;
+//     }
+//   }
+// }
+
+// .sceneIcon {
+//   position: absolute;
+//   z-index: 5000;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+
+//   // transform: translate(-100%, -100%);
+//   svg {
+//     width: $icon-size/1.5;
+//     height: $icon-size/1.5;
+//   }
+// }
+
+// .sceneIconSvg {
+//   width: $icon-size/2;
+//   height: $icon-size/2;
+// }
+
+// .iconText {
+//   // color: white;
+//   // font-size: 9px;
+//   // font-size: 1vw;
+//   // Make sure the icon text doesn't wrap.
+//   white-space: nowrap;
+// }
+
+.iconText {
+  // position: relative;
+  position: absolute;
+  // padding: 0.5rem 1rem;
+  // padding-left: 1re
+  // background: $bg-color;
+  border-radius: 1.5rem;
+  text-shadow: 0px 0px 2px #000, 0px 0px 6px #000, 0px 0px 8px #000;
+  // 0px 0px 10px #000;
+}
+.sceneIcon {
+  position: absolute;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform-origin: center;
+  // transform: translateY(50%);
+  // background: #f0f;
+
+  svg {
+    // transform-origin: center;
+    width: $icon-size/2;
+    height: $icon-size/2;
+  }
+
+  span {
+    font-size: calc(5px + 0.6vw);
+    color: white;
+    font-weight: 300;
+    padding: 0;
+    display: inline-block;
+    position: absolute;
+    padding-top: 5px;
+    // bottom: 0%;
+    top: 85%;
+  }
+}

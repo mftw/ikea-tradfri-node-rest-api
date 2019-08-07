@@ -15,6 +15,7 @@ export default function Nav(props) {
   const halfContainerHeight = containerHeight / 2;
   const quaterContainerHeight = containerHeight / 4;
   const startingPoint = 0;
+  // const startingPoint = -20;
   const { changeView, currentView } = props;
 
   useEffect(() => {
@@ -98,10 +99,22 @@ export default function Nav(props) {
     setSpring({ y: -halfContainerHeight });
   }, [setSpring, halfContainerHeight]);
 
-  useEffect(() => {
-    // go the fuck up, at mount.
-    cbGoUp();
-  }, [cbGoUp]);
+  // const goUpDown = useCallback(() => {
+  //   // lastLocalY.current = -halfContainerHeight;
+  //   const curY = lastLocalY.current;
+  //   setSpring(() => ({
+  //     to: [{ y: curY }, { y: -curY }],
+  //     from: { y: curY },
+  //   }));
+  // }, [lastLocalY, setSpring]);
+
+  // useEffect(() => {
+  //   // go the fuck up, at mount.
+  //   cbGoUp();
+
+  //   // goDown();
+  //   // goUpDown();
+  // }, [cbGoUp]);
 
   function goDown() {
     lastLocalY.current = startingPoint;
@@ -124,7 +137,7 @@ export default function Nav(props) {
   const navOpacity = y.interpolate({
     map: Math.abs,
     range: [startingPoint, halfContainerHeight],
-    output: ["0.3", "1"],
+    output: [0.1, 1],
     extrapolate: "clamp",
   });
 
@@ -148,22 +161,22 @@ export default function Nav(props) {
 
   function navButtonProps(view) {
     const onClick = () => changeView(view);
-    let props = {
+    let btnProps = {
       onClick,
     };
     if (currentView === view) {
-      props.className = styles.activeNav;
+      btnProps.className = styles.activeNav;
     }
-    return props;
+    return btnProps;
   }
 
-  function appearOnMouseOver(autoDisappear = false) {
-    let props = {};
+  function appearOnMouseOver(autoDisappear = true) {
+    let mouseProps = {};
     if (autoDisappear) {
-      props.onMouseLeave = goDown;
-      props.onMouseEnter = goUp;
+      mouseProps.onMouseLeave = goDown;
+      mouseProps.onMouseEnter = goUp;
     }
-    return props;
+    return mouseProps;
   }
 
   return (
@@ -172,7 +185,7 @@ export default function Nav(props) {
         ref={footerRef}
         className={styles.mainNav}
         {...bind()}
-        {...appearOnMouseOver()}
+        // {...appearOnMouseOver()}
         style={{
           opacity: navOpacity,
           transform: yTranslate,
