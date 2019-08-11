@@ -28,13 +28,10 @@ const onClickRequest = async (parentName, scene) => {
 const SceneIcon = props => {
   const {
     cords,
-    className,
     containerSize,
     number,
     text,
     numberOfChilds,
-    request,
-    parentId,
     parentName,
     // zIndex,
   } = props;

@@ -110,6 +110,7 @@ const Masterswitch = props => {
   const [{ x, y }, setMoveSpring] = useSpring(() => ({
     x: 0,
     y: 0,
+    // config: config.molasses,
   }));
 
   const touchStart = useRef(false);
@@ -176,6 +177,7 @@ const Masterswitch = props => {
       xCordsChildren: 100,
       yCordsChildren: 100,
       zIndex: 500,
+      // config: config.wobbly,
     }));
   }
 

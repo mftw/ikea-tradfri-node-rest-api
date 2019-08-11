@@ -120,6 +120,10 @@ $icon-size: 6vw;
     // transform-origin: center;
     width: $icon-size/2;
     height: $icon-size/2;
+    fill: darken($bg-color, 5);
+    // filter: drop-shadow(0px 0px 10px #{$fg-color});
+    // filter: drop-shadow(0px 0px 10px #{$fg-color});
+    filter: drop-shadow(0px 0px 10px lighten($bg-color, 60));
   }
 
   span {

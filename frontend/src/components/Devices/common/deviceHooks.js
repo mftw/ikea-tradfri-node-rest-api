@@ -152,6 +152,9 @@ export function useOutsideAlerter(initialIsVisible) {
   return { componentRef, isComponentClicked, setIsComponentVisible };
 }
 
+// TODO: There is a bug if you drag, or attempt to drag outside editmode,
+// the press-and-hold function will not fire. After first attempt the function is normal.
+
 export function useDraggable(
   setMoveSpring,
   touchStart,
