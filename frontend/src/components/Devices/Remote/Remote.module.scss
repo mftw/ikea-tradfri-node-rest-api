@@ -1,0 +1,60 @@
+@import "../../../lib/load";
+$icon-size: 5vw;
+
+.remote {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: $icon-size;
+  align-self: flex-start;
+  position: relative;
+  // height: ;
+  // height: max-content;
+  margin: 0 $icon-size / 2;
+  font-family: "Blinker", sans-serif;
+
+  // background: rgb(47, 65, 82);
+
+  span {
+    // font-size: 14px;
+    // Make sure the icon text doesn't wrap.
+    white-space: nowrap;
+  }
+}
+
+.mainIcon {
+  width: $icon-size;
+  height: $icon-size;
+  z-index: 100;
+}
+
+.mainBg {
+  position: absolute;
+  border-radius: 100%;
+  background: radial-gradient(lighten($bg-color, 10), lighten($bg-color, 30));
+  height: $icon-size - 1;
+  // height: 100%;
+  width: $icon-size - 1;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > span {
+    position: absolute;
+    padding-top: 5px;
+    top: 100%;
+  }
+}
+
+.childContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}

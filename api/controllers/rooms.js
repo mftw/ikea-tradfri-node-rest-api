@@ -4,6 +4,7 @@ const tradfri = require("../../lib/tradfri/instance");
 exports.show_all_rooms = async (req, res, next) => {
   const localTradfri = await tradfri;
   return res.status(200).json(Object.entries(localTradfri.groups));
+  // return res.status(200).json(localTradfri.groups);
 };
 
 exports.show_single_room = async (req, res, next) => {

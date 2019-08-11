@@ -9,11 +9,14 @@
   left: 0;
   display: flex;
   flex-wrap: wrap;
+  padding: 1rem;
+  // font-weight: 500;
 }
 
 .homeContainer {
   width: 100%;
   position: relative;
+  padding-top: 2rem;
 }
 
 .floorPlanContainer {

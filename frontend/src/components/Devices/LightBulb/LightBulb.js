@@ -43,7 +43,6 @@ const LightBulb = props => {
     styling.position = "absolute";
     styling.transform = "translate(-50%, -50%)";
   }
-  const thisLight = useRef(null);
   const lastLocalXY = useRef([0, 0]);
 
   function setLocalStorageXY(cords, id) {
@@ -125,7 +124,6 @@ const LightBulb = props => {
       style={{
         transform: xyTranslate,
       }}
-      ref={thisLight}
     >
       <svg
         enableBackground="new 0 0 512.022 512.022"

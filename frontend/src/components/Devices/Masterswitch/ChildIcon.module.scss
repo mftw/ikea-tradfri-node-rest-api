@@ -1,0 +1,56 @@
+$icon-size: 6vw;
+// .remote {
+//   position: relative;
+//   color: black;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: $icon-size;
+//   height: min-content;
+//   margin: 0 $icon-size / 2;
+//   // border-radius: 0.5rem;
+//   // overflow: hidden;
+// }
+// .mainIcon {
+//   width: $icon-size;
+//   height: $icon-size;
+//   z-index: 100;
+//   // border-radius: 0.9rem;
+
+//   // Giant font size cus wierd svg scaling
+//   text {
+//     font-size: 60px;
+//     text-align: center;
+//     line-height: 1.25;
+//     word-spacing: 0;
+//     // font-family: monospace;
+//   }
+// }
+
+.childIcon {
+  position: absolute;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  // transform: translate(-100%, -100%);
+  svg {
+    width: $icon-size/1.5;
+    height: $icon-size/1.5;
+  }
+}
+
+.childIconSvg {
+  width: $icon-size/2;
+  height: $icon-size/2;
+}
+
+// .iconText {
+//   // color: white;
+//   font-size: 0.8rem;
+//   // Make sure the icon text doesn't wrap.
+//   white-space: nowrap;
+// }

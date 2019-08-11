@@ -12,10 +12,13 @@ $transTime: 0.3s;
 
   &-enter {
     position: absolute;
+    top: 0;
+    left: 0;
     transition: opacity $transTime ease-in, transform $transTime ease-out;
     opacity: 0.01;
     transform: scale(0.9) translate3d(0, 50px, 0);
     &-active {
+      // position: relative;
       opacity: 1;
       transform: scale(1) translate3d(0, 0, 0);
     }
@@ -23,11 +26,14 @@ $transTime: 0.3s;
 
   &-leave {
     position: absolute;
+    top: 0;
+    left: 0;
     // opacity: 0;
     transition: opacity $transTime / 2 ease-in, transform $transTime ease;
     opacity: 1;
     transform: scale(1);
     &-active {
+      // position: relative;
       opacity: 0;
       transform: scale(0.9);
     }

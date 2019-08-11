@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
   // useSprings,
-  interpolate,
   useSpring,
   animated,
 } from "react-spring";
@@ -16,6 +15,7 @@ export default function Nav(props) {
   const halfContainerHeight = containerHeight / 2;
   const quaterContainerHeight = containerHeight / 4;
   const startingPoint = 0;
+  // const startingPoint = -20;
   const { changeView, currentView } = props;
 
   useEffect(() => {
@@ -24,12 +24,12 @@ export default function Nav(props) {
     }
   }, [footerRef]);
 
-  useEffect(() => {
-    // go the fuck up, at mount.
-    goUp();
-  }, [goUp]);
+  // useEffect(() => {
+  //   // go the fuck up, at mount.
+  //   goUp();
+  // }, [goUp]);
 
-  const [{ y }, set] = useSpring(() => ({ y: startingPoint }));
+  const [{ y }, setSpring] = useSpring(() => ({ y: startingPoint }));
 
   const bind = useGesture(animation => {
     const {
@@ -41,7 +41,7 @@ export default function Nav(props) {
       last,
     } = animation;
 
-    set(() => {
+    setSpring(() => {
       // console.log(containterHeight);
       const generelDir = {
         up: yDir < 0,
@@ -94,15 +94,37 @@ export default function Nav(props) {
     });
   });
 
+  const cbGoUp = useCallback(() => {
+    lastLocalY.current = -halfContainerHeight;
+    setSpring({ y: -halfContainerHeight });
+  }, [setSpring, halfContainerHeight]);
+
+  // const goUpDown = useCallback(() => {
+  //   // lastLocalY.current = -halfContainerHeight;
+  //   const curY = lastLocalY.current;
+  //   setSpring(() => ({
+  //     to: [{ y: curY }, { y: -curY }],
+  //     from: { y: curY },
+  //   }));
+  // }, [lastLocalY, setSpring]);
+
+  // useEffect(() => {
+  //   // go the fuck up, at mount.
+  //   cbGoUp();
+
+  //   // goDown();
+  //   // goUpDown();
+  // }, [cbGoUp]);
+
   function goDown() {
     lastLocalY.current = startingPoint;
-    set({ y: startingPoint });
+    setSpring({ y: startingPoint });
   }
   // goDown();
 
   function goUp() {
     lastLocalY.current = -halfContainerHeight;
-    set({ y: -halfContainerHeight });
+    setSpring({ y: -halfContainerHeight });
   }
 
   function toggle() {
@@ -115,7 +137,7 @@ export default function Nav(props) {
   const navOpacity = y.interpolate({
     map: Math.abs,
     range: [startingPoint, halfContainerHeight],
-    output: ["0.3", "1"],
+    output: [0.1, 1],
     extrapolate: "clamp",
   });
 
@@ -139,22 +161,22 @@ export default function Nav(props) {
 
   function navButtonProps(view) {
     const onClick = () => changeView(view);
-    let props = {
+    let btnProps = {
       onClick,
     };
     if (currentView === view) {
-      props.className = styles.activeNav;
+      btnProps.className = styles.activeNav;
     }
-    return props;
+    return btnProps;
   }
 
-  function appearOnMouseOver(autoDisappear = false) {
-    let props = {};
+  function appearOnMouseOver(autoDisappear = true) {
+    let mouseProps = {};
     if (autoDisappear) {
-      props.onMouseLeave = goDown;
-      props.onMouseEnter = goUp;
+      mouseProps.onMouseLeave = goDown;
+      mouseProps.onMouseEnter = goUp;
     }
-    return props;
+    return mouseProps;
   }
 
   return (
@@ -163,15 +185,10 @@ export default function Nav(props) {
         ref={footerRef}
         className={styles.mainNav}
         {...bind()}
-        {...appearOnMouseOver()}
+        // {...appearOnMouseOver()}
         style={{
           opacity: navOpacity,
-          // transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
           transform: yTranslate,
-          // transform: interpolate(
-          //   [yTranslate, rotateX],
-          //   (trans, rotateX) => `${trans} ${rotateX}`
-          // ),
         }}
       >
         <animated.ul className={styles.mainMenu} style={{ transform: rotateX }}>
@@ -195,11 +212,6 @@ export default function Nav(props) {
           className={styles.mainNavHandle}
           style={{ transform: rotateChevron }}
           onClick={toggle}
-          // onClick={(() => {
-          //   // this is an ugly hack to open the navigation bar at mount using an IIFE
-          //   toggle();
-          //   return toggle;
-          // })()}
         >
           <svg version="1.1" width="100%" height="100%" viewBox="0 0 20 20">
             <path
