@@ -4,15 +4,18 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import SubscribeTest from "./components/Requesttest/Subscribetest";
 
 import styles from "./App.module.scss";
 import "./App.scss";
+
 // import pic from "./assets/floorplan3d/living-dining-room.png";
 
 const Settings = props => {
   return (
     <div style={{ width: "90vw", height: "50vh", background: "#333333" }}>
       this is settings
+      <SubscribeTest />
     </div>
   );
 };
