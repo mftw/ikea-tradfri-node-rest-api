@@ -3,6 +3,7 @@ const pubsub = require("../../lib/pubSub");
 const typeDefs = require("./schema/index");
 const resolvers = require("./resolvers/resolvers");
 const Tradfri = require("../../lib/tradfri/instance");
+require("./subscription-events/group");
 // const ikeaSub = require("./ikeaSubscriptions");
 
 // Apollo's defualt endpoint is /graphql, dunno how to change it, and doesn't care

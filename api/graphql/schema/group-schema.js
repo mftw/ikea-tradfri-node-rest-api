@@ -14,6 +14,16 @@ const typeDefs = gql`
     scenes: [Scene]
   }
 
+  type SceneChange {
+    instanceId: String!
+    toSceneId: String!
+    fromSceneId: String!
+  }
+
+  extend type Subscription {
+    sceneChange: SceneChange!
+  }
+
   extend type RootQuery {
     groups: [Group]
   }
