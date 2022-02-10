@@ -14,7 +14,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "lowdb": "^1.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-addons-css-transition-group": "^15.6.2",
